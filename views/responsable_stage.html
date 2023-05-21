@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gestion de responsable de stage</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"
+    integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>
+</head>
+<body class="w-full h-full" style="
+  background: linear-gradient( rgba(139, 200, 240, 0.5), rgba(105, 196, 235, 0.5)), 
+ url('https://static.vecteezy.com/ti/vecteur-libre/t2/1874129-abstrait-bleu-ondule-vectoriel.jpg');
+ background-size: cover;
+background-repeat: no-repeat;">
+
+<div class="flex justify-between items-center bg-white border-b border-gray-200 px-6 py-4">
+  
+    <div class="bg-white container mx-auto mt-4 p-4">
+      <h1 class="text-center text-2xl font-bold mb-4">
+        Gestion des responsables de stages
+      </h1>
+<!-- Formulaire d'ajout d'un nouvel responsable de stage -->
+<div class="mb-8">
+  <h2 class="text-xl font-bold mb-4">Ajouter un nouvel responsable de stage</h2>
+  <form class="flex flex-col md:flex-row md:items-center">
+    <input
+      class="border border-gray-400 p-2 rounded-md mb-2 md:mr-2 md:mb-0"
+      type="text"
+      id="cin"
+      placeholder="cin  "
+    />
+    <input
+      class="border border-gray-400 p-2 rounded-md mb-2 md:mr-2 md:mb-0"
+      type="text"
+      id="nom"
+      placeholder="Nom  "
+    />
+    <input
+    class="border border-gray-400 p-2 rounded-md mb-2 md:mr-2 md:mb-0"
+    type="text"
+    id="prenom"
+    placeholder="Prenom  "
+  />
+  <input
+  class="border border-gray-400 p-2 rounded-md mb-2 md:mr-2 md:mb-0"
+  type="text"
+  id="email"
+  placeholder="Email  "
+/>
+<input
+      class="border border-gray-400 p-2 rounded-md mb-2 md:mr-2 md:mb-0"
+      type="text"
+      id="telephone"
+      placeholder="Téléphone  "
+    />
+    <input 
+    class="border border-gray-400 p-2 rounded-md mb-2 md:mr-2 md:mb-0"
+    type="text"
+    id="specialite"
+    placeholder="Specialite "/>
+    <input 
+    class="border border-gray-400 p-2 rounded-md mb-2 md:mr-2 md:mb-0"
+    type="text"
+    id="adresse"
+    placeholder="Adresse "
+  />
+  </form>
+</div>
+    <button class="bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-4 rounded"  
+      id="addResponsable_stage">
+      Ajouter un responsable 
+    </button>
+  </div>
+</div>
+ 
+    <table class="w-full table-auto">
+      <thead class="bg-gray-50">
+        <tr>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Cin
+              </th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Nom
+          </th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Prénom
+          </th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Email
+          </th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Téléphone
+          </th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          Specialite
+          </th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Adresse
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Actions
+              
+              </th>
+            
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        <!-- Exemple de ligne pour un responsable de stage -->
+       ${responsables ? responsables.map((e) => { return `
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm text-gray-900">${e.cin} </div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm text-gray-900">${e.nom}</div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm text-gray-900">${e.prenom}</div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm text-gray-900">${e.email}</div>
+          </td> 
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm text-gray-900">${e.telephone}</div>
+          </td> 
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm text-gray-900">${e.specialite}</div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm text-gray-900">${e.adresse}</div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+            <a
+                  class="bg-blue-300 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
+                  type="button"
+                  href="/admin/editresponsable_stage/${e.id}"
+                >
+                  Modifier
+                </a>
+                <button
+                  class="bg-blue-300 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
+                  type="button"
+                  onclick="deleteresponsable_stage('${e.id}')"
+                >
+                  Supprimer
+                </button>
+          </td>
+        </tr>
+        `  }).join('') : `` } 
+        <!-- Fin de l'exemple -->
+      </tbody>
+    </table>
+  </div>
+ </div>
+</body>
+<script>
+  const addResponsable_stage = document.getElementById('addResponsable_stage')
+  addResponsable_stage.addEventListener("click",(e)=>{
+    e.preventDefault()
+    const data = {
+      cin: document.getElementById("cin").value,
+      nom: document.getElementById("nom").value,
+      prenom : document.getElementById("prenom").value,
+      email : document.getElementById("email").value,
+      telephone : document.getElementById("telephone").value,
+      specialite : document.getElementById("specialite").value,
+      adresse : document.getElementById("adresse").value,
+    }
+    axios.post("http://localhost:3000/admin/addResponsable_stage", data)
+        .then((data) => {
+          if (data.data.success) {
+            window.location.reload();
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    });
+    function deleteresponsable_stage(id) {
+      axios
+        .delete("http://localhost:3000/admin/deleteresponsable_stage/" + id)
+        .then((res) => {
+          console.log(res);
+          if (res.data.success) {
+            window.location.reload();
+          }
+        });
+    }
+</script>
+</html>  

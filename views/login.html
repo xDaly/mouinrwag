@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.16/tailwind.min.css"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"
+      integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+  </head>
+
+  <body
+    class="w-full h-full"
+    style="
+      background: linear-gradient(
+          rgba(139, 200, 240, 0.5),
+          rgba(105, 196, 235, 0.5)
+        ),
+        url('https://static.vecteezy.com/ti/vecteur-libre/t2/1874129-abstrait-bleu-ondule-vectoriel.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+    "
+  >
+    <!-- contenu du formulaire -->
+    <section
+      class="bg-white max-w-lg mx-auto p-8 md:p-12 my-10 rounded-lg shadow-lg"
+    >
+      <div class="flex justify-center">
+        <img
+          class="flex-"
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVv22mLrwZ4Td1_UBjVbLGnJif_Dut-dwZJChWPwpOFJaigfq557Um-8dnQj_S7udKqII&usqp=CAU"
+        />
+      </div>
+      <form action="" id="loginForm" m class="mx-auto">
+        <div class="mb-6">
+          <label class="block font-normal mb-2 text-gray-700" for="login">
+          </label>
+
+          <input
+            class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="cin"
+            type="text"
+            placeholder="login"
+          />
+        </div>
+
+        <div class="mb-4">
+          <label class="block font-n mb-2 text-gray-700" for="motpasse">
+            Mot de passe
+          </label>
+          <input
+            class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="motpasse"
+            type="password"
+            placeholder="Mot de passe"
+          />
+        </div>
+        <div class="mb-4">
+          <div class="flex justify-center">
+            <button
+              class="inline-block align-baseline bg-blue-400 hover:bg-blue-500 text-white font-bold py-3 px-6 rounded focus:outline-none focus:shadow-outline mr-4 w-40 text-center"
+              type="submit"
+            >
+              Connexion
+            </button>
+            <button
+              a
+              class="inline-block align-baseline bg-blue-400 hover:bg-blue-500 text-white font-bold py-3 px-6 rounded focus:outline-none focus:shadow-outline mr-4 w-40 text-center"
+              type="submit"
+            >
+              Annule
+            </button>
+          </div>
+        </div>
+
+        <div class="text-center">
+          <a
+            class="inline-block align-baseline font-bold text-sm text-blue-400 hover:text-blue-500"
+            href="/auth/registerPage"
+          >
+            Créer un compte
+          </a>
+        </div>
+      </form>
+    </section>
+  </body>
+  <script>
+    let loginForm = document.getElementById("loginForm");
+
+    loginForm.addEventListener("submit", async (e) => {
+      let loginData = {
+        cin: document.getElementById("cin").value,
+        mot_de_passe: document.getElementById("motpasse").value,
+      };
+      e.preventDefault();
+      await axios
+        .post("/auth/login", loginData)
+        .then((res) => {
+          console.log(res.data.success);
+          if (res.data.success) {
+            window.location.href = "/dashboard";
+          } else {
+            alert("login ou mot de passe incorrect");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+  </script>
+</html>

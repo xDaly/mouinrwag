@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestion des enseignants</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js" integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  </head>
+
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <meta charset="utf-8" />
+      <title>Page d'inscription</title>
+
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.7/tailwind.min.css"
+      />
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+      />
+    </head>
+
+    <body
+      class="w-full h-full"
+      style="
+        background: linear-gradient(
+            rgba(139, 200, 240, 0.5),
+            rgba(105, 196, 235, 0.5)
+          ),
+          url('https://static.vecteezy.com/ti/vecteur-libre/t2/1874129-abstrait-bleu-ondule-vectoriel.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+      "
+    >
+      <div class="bg-white container mx-auto mt-4 p-4">
+        <h1 class="text-center text-3xl font-bold mb-4">
+          Gestion des enseignants
+        </h1>
+
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-bold">Liste des enseignants</h2>
+
+
+        </div>
+      
+          <form>
+            <div class="grid gap-6 mb-6 md:grid-cols-2">
+              <div>
+                <label
+                  for="first_name"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >Nom</label
+                >
+                <input
+                  type="text"
+                  id="nom"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="nom de l'etudiant"
+                  value="${enseignant.nom}"
+
+                />
+              </div>
+              <div>
+                <label
+                  for="last_name"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >Prenom</label
+                >
+                <input
+                  type="text"
+                  id="prenom"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="prenom de l'etudiant"
+                  value="${enseignant.prenom}"
+                />
+              </div>
+              <div>
+                <label
+                  for="company"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >Email</label
+                >
+                <input
+                  type="text"
+                  id="email"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="email de l'etudiant"
+                  value="${enseignant.email}"
+                />
+              </div>
+              <div>
+                <label
+                  for="phone"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >CIN</label
+                >
+                <input
+                  id="cin"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="num CIN de l'etudiant"
+                  value="${enseignant.cin}"
+                />
+              </div>
+              <div>
+                <label
+                  for="website"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >Telephone</label
+                >
+                <input
+                  id="telephone"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="telephone de l'etudiant"
+                  value="${enseignant.telephone}"
+                />
+              </div>
+              <div>
+                <label
+                  for="visitors"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >addresse</label
+                >
+                <input
+                  id="addresse"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="addresse"
+                  value="${enseignant.addresse}"
+                />
+              </div>
+            </div>
+  
+            <div>
+              <label
+                for="visitors"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >specialite</label
+              >
+              <input
+                id="specialite"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="specialite"
+                value="${enseignant.specialite}"
+              />
+            </div>
+            <button
+            type="submit"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        id="editEtudiant"
+            >
+            Submit
+          </button>
+          </div>
+      
+           
+          </form>
+
+
+      </div>
+
+ 
+
+
+        <!-- > edit modal  -->
+   
+    </body>
+    <script>
+
+
+      const addEtudiant = document.getElementById("editEtudiant");
+      addEtudiant.addEventListener("click", (e) => {
+        e.preventDefault();
+        const nom = document.getElementById("nom").value;
+        const prenom = document.getElementById("prenom").value;
+        const email = document.getElementById("email").value;
+        const cin = document.getElementById("cin").value;
+        const telephone = document.getElementById("telephone").value;
+        const addresse = document.getElementById("addresse").value;
+        const specialite = document.getElementById("specialite").value;
+        const data = {
+          nom,
+          prenom,
+          email,
+          cin,
+          telephone,
+          addresse,
+          specialite,
+        };
+
+
+        axios.post("http://localhost:3000/admin/updateenseignant/${enseignant.id}", data).then((res) => {
+          console.log(res);
+         if (res.data.success) {
+          
+             window.location.href = "http://localhost:3000/admin/enseignant";
+           
+         }
+        });
+
+      });
+
+      
+    </script>
+  </html>
+</html>

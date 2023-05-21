@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Interface d'etudiant</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"
+    integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>
+</head>
+
+<body class="w-full h-full" style="
+  background: linear-gradient( rgba(139, 200, 240, 0.5), rgba(105, 196, 235, 0.5)), 
+ url('https://static.vecteezy.com/ti/vecteur-libre/t2/1874129-abstrait-bleu-ondule-vectoriel.jpg');
+ background-size: cover;
+background-repeat: no-repeat;">
+  <div class=" bg-white container mx-auto p-4">
+    <h1 class="text-3xl font-bold mb-4">Gestion des départements</h1>
+    
+    <div class="flex flex-wrap justify-between items-center mb-4">
+      
+      
+     <!-- Formulaire d'ajout d'un nouvel departement -->
+     <div class="mb-8">
+      <a href="/dashboard">Dashboard</a>
+        <h2 class="text-xl font-bold mb-2">Ajouter un nouveau departement</h2>
+        <form class="flex flex-col md:flex-row md:items-center">
+          <input
+            class="border border-gray-400 p-2 rounded-md mb-2 md:mr-2 md:mb-0"
+            type="text"
+            id="code_departement"
+            placeholder="Code departement"
+          />
+          <input
+            class="border border-gray-400 p-2 rounded-md mb-2 md:mr-2 md:mb-0"
+            type="text"
+            id="nom_departement"
+            placeholder="Nom departement"
+          />
+          
+          
+        </form>
+      </div>
+      <div class="flex justify-center">
+        <button
+          class="bg-blue-300 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
+          id="addDepartement"
+        >
+          Ajouter Departement
+        </button>
+      </div></div>
+    <table class="table-auto w-full">
+      <thead>
+        <tr class="bg-gray-200">
+          <th class="px-4 py-2">Code</th>
+          <th class="px-4 py-2">Nom</th>
+          <th class="px-4 py-2">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Exemple de ligne pour un departement -->
+        ${ departements.map((e) => { return `
+        <tr>
+          <td class="px-4 py-2"> ${e.code_departement}</td>
+          <td class="px-4 py-2">${e.nom_departement}</td>
+          <td class="px-4 py-2">
+            <a
+            class="bg-blue-300 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
+            type="button"
+            href="/admin/editdepartement/${e.id}"
+          >
+            Modifier
+          </a>
+            <button class="bg-blue-300 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors" type="button" 
+            onclick="deleteDepartement('${e.id}')"
+            >Supprimer</button>
+          </td>
+        </tr>
+        ` }).join('') }
+        <!-- Fin de l'exemple -->
+     
+      </tbody>
+    </table>
+  </div>
+</body>
+<script>
+    const addDepartement = document.getElementById("addDepartement");
+    addDepartement.addEventListener("click", (e) => {
+      e.preventDefault();
+      const departement = {
+        code_departement: document.getElementById("code_departement").value,
+        nom_departement: document.getElementById("nom_departement").value,
+      };
+
+      axios
+        .post("http://localhost:3000/admin/addDepartement", departement)
+        .then((data) => {
+          if (data.data.success) {
+            window.location.reload();
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    });
+
+    function deleteDepartement(id) {
+      axios
+        .delete("http://localhost:3000/admin/deleteDepartement/" + id)
+        .then((res) => {
+          console.log(res);
+          if (res.data.success) {
+            window.location.reload();
+          }
+        });
+    }
+  </script>
+</html>

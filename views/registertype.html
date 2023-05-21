@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Choisir type de compte</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <style>
+    body {
+      height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      font-family: "Poppins", sans-serif;
+      font-weight: 600;
+      background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
+    }
+    a {
+      font-size: 5vmin;
+      padding: 0.5em 1em;
+      background: #fff;
+      color: #4a5568;
+      border: 0px solid #a0aec0;
+      margin: 0.1em;
+      transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease,
+        transform 0.2s ease;
+      box-shadow: 0 0 0 #bee3f8;
+      transform: translateY(0);
+    }
+    a:first-of-type {
+      border-radius: 0.5em 0 0 0.5em;
+    }
+    a:last-of-type {
+      border-radius: 0 0.5em 0.5em 0;
+    }
+    a i {
+      color: #a0aec0;
+      margin-right: 0.3em;
+      transition: all 0.2s ease-out;
+    }
+    .multi-button:hover a {
+      color: #a0aec0;
+    }
+
+    .multi-button:hover a:hover {
+      background: #d53f8c;
+      color: #fff;
+      box-shadow: 0 0 0.8em 0 rgba(213, 63, 140, 0.8);
+      transform: translateY(-0.2em);
+    }
+    .multi-button:hover a i {
+      color: #cbd5e0;
+    }
+    .multi-button:hover a:hover i {
+      color: #fed7e2;
+      transform: rotate(-10deg);
+    }
+  </style>
+  <body>
+    <div class="multi-button">
+      <a href="/auth/registerPage/organisme"><i class="fas fa-cut"></i> Organisme</a>
+      <a href="/auth/registerPage/tuteur"><i class="fas fa-copy"></i> Tuteur</a>
+      <a href="/auth/registerPage/responsable"><i class="fas fa-paste"></i> Responsable</a>
+    </div>
+    <div class="multi-button">
+        <a href="/"><i class="fas fa-cut"></i> Acceuil</a>
+        <a href="/auth/loginPage"><i class="fas fa-copy"></i> Login</a>
+      </div>
+  </body>
+</html>

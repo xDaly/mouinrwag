@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Statistiques de stage</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"
+    integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>
+</head>
+  <body class="w-full h-full" style="
+  background: linear-gradient( rgba(139, 200, 240, 0.5), rgba(105, 196, 235, 0.5)), 
+ url('https://static.vecteezy.com/ti/vecteur-libre/t2/1874129-abstrait-bleu-ondule-vectoriel.jpg');
+ background-size: cover;
+background-repeat: no-repeat;">
+    <div class="container mx-auto p-4">
+      <h1 class="text-center text-3xl font-bold mb-4"> Gére les statistiques</h1>
+      <div class="grid grid-cols-3 gap-4">
+
+        <div class="bg-white rounded-lg p-4 shadow">
+            <h2 class="text-lg font-bold mb-2">Nomber des Administrateurs</h2>
+            <p class="text-2xl font-bold">1</p>
+          </div>
+          <div class="bg-white rounded-lg p-4 shadow">
+            <h2 class="text-lg font-bold mb-2">Nomber des Organismes</h2>
+            <p class="text-2xl font-bold">${organismes}</p>
+          </div>
+          <div class="bg-white rounded-lg p-4 shadow">
+            <h2 class="text-lg font-bold mb-2">Nomber des Responsable de stage</h2>
+            <p class="text-2xl font-bold">${responsablesstages}</p>
+          </div>
+          <div class="bg-white rounded-lg p-4 shadow">
+            <h2 class="text-lg font-bold mb-2">Nomber des Départements</h2>
+            <p class="text-2xl font-bold">${departements}</p>
+          </div>
+          <div class="bg-white rounded-lg p-4 shadow">
+            <h2 class="text-lg font-bold mb-2">
+              Nomber des Etudiants </br>
+              Nomber des Enseignants</h2>
+            <p class="text-2xl font-bold">${users}</p>
+          </div>
+          <div class="bg-white rounded-lg p-4 shadow">
+            <h2 class="text-lg font-bold mb-2">Nomber des Stages</h2>
+            <p class="text-2xl font-bold">${stages}</p>
+          </div>
+      
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestion des stages</title>
+    <!-- Chargement des styles de Tailwind -->
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"
+      integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+  </head>
+  <body
+    class="w-full h-full"
+    style="
+      background: linear-gradient(
+          rgba(139, 200, 240, 0.5),
+          rgba(105, 196, 235, 0.5)
+        ),
+        url('https://static.vecteezy.com/ti/vecteur-libre/t2/1874129-abstrait-bleu-ondule-vectoriel.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+    "
+  >
+    <div class="bg-white container mx-auto mt-4 p-4">
+      <h1 class="text-center text-2xl font-bold mb-4">
+        Gestion des stages
+      </h1>
+
+      <!-- Formulaire d'ajout d'un nouvel organisme -->
+      <div class="mb-8">
+        <a href="/dashboard">Dashboard</a>
+        <h2 class="text-xl font-bold mb-2">Ajouter un nouveau stage</h2>
+        <form class="flex flex-col md:flex-row md:items-center">
+          <input
+            class="border border-gray-400 p-2 rounded-md mb-2 md:mr-2 md:mb-0"
+            type="text"
+            id="code_stage"
+            placeholder="Code stage"
+          />
+          <input
+            class="border border-gray-400 p-2 rounded-md mb-2 md:mr-2 md:mb-0"
+            type="text"
+            id="type"
+            placeholder="Type de stage"
+          />
+          <input
+            class="border border-gray-400 p-2 rounded-md mb-2 md:mr-2 md:mb-0"
+            type="text"
+            id="duree"
+            placeholder="Durée du stage"
+          />
+          <div class="flex mx-6 my-2">
+            <select onchange="selectRole(event)" id="organismeId" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            ${organismes.map((o)=>{
+            return  `<option value="${o.id}">${o.nom_organisme}</option>`
+            })} 
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="flex justify-center">
+        <button
+          class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+          id="addStage"
+        >
+          Ajouter
+        </button>
+      </div>
+      <!-- Liste des organismes -->
+      <div>
+        <h2 class="text-xl font-bold mb-2">Liste des stages</h2>
+        <table class="w-full table-auto">
+          <thead>
+            <tr>
+              <th class="px-4 py-2">Code du stage</th>
+              <th class="px-4 py-2">Type de Stage</th>
+              <th class="px-4 py-2">Durée du stage</th>
+              <th class="px-4 py-2">Date de création</th>
+              <th class="px-4 py-2">Organisme</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Exemple de ligne pour un stage -->
+            ${stages && stages.map((e) => { return `
+            <tr>
+              <td class="border px-4 py-2">${e.code_stage}</td>
+              <td class="border px-4 py-2">${e.type}</td>
+              <td class="border px-4 py-2">${e.duree}</td>
+              <td class="border px-4 py-2">${new Intl.DateTimeFormat(['ban', 'id']).format(e.createdAt)}</td>
+              <td class="border px-4 py-2">${e.organisme.nom_organisme}</td>
+              <td class="border px-4 py-2">
+                <a
+                  class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
+                  type="button"
+                  href="/admin/editstage/${e.id}"
+                >
+                  Modifier
+                </a>
+                <button
+                  class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+                  type="button"
+                  onclick="deleteStage('${e.id}')"
+                >
+                  Supprimer
+                </button>
+              </td>
+            </tr>
+            ` }).join('') }
+            <!-- Fin de l'exemple -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+  <script>
+    const addStage = document.getElementById("addStage");
+    addStage.addEventListener("click", (e) => {
+      const stage = {
+        code_stage: document.getElementById("code_stage").value,
+        type: document.getElementById("type").value,
+        duree: document.getElementById("duree").value,
+        organismeId : document.getElementById("organismeId").value
+      };
+      e.preventDefault();
+      axios
+        .post("http://localhost:3000/admin/addStage", stage)
+        .then((data) => {
+          if (data.data.success) {
+            window.location.reload();
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    });
+
+    function deleteStage(id) {
+      axios
+        .delete("http://localhost:3000/admin/deleteStage/" + id)
+        .then((res) => {
+          console.log(res);
+          if (res.data.success) {
+            window.location.reload();
+          }
+        });
+    }
+  </script>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <title>demande stage</title>
+  </head>
+
+  <body class="bg-gray-100">
+    <div class="flex items-center justify-center h-screen">
+      <div
+        class="container"
+        style="display: flex; flex-direction: column; align-items: center"
+      >
+        <h1 class="text-2xl font-bold mb-4">
+          Demande de stage de ${user.dataValues.nom} ${user.dataValues.prenom}
+        </h1>
+        <form id="uploadForm" class="max-w-md" >
+          <div class="mb-4">
+            <label for="input1" class="block mb-2">Nom:</label>
+            <input
+              type="text"
+              id="input1"
+              name="nom"
+              value="${user.dataValues.nom}"
+              class="w-full bg-gray-200 p-2 rounded"
+              disabled
+            />
+          </div>
+          <div class="mb-4">
+            <label for="input2" class="block mb-2">Prenom:</label>
+            <input
+              type="text"
+              id="input2"
+              name="prenom"
+              value="${user.dataValues.prenom}"
+              class="w-full bg-gray-200 p-2 rounded"
+              disabled
+            />
+          </div>
+          <div class="mb-4">
+            <label for="input3" class="block mb-2">Telephone :</label>
+            <input
+              type="text"
+              id="input3"
+              name="telephone"
+              value="${user.dataValues.telephone}"
+              class="w-full bg-gray-200 p-2 rounded"
+              disabled
+            />
+          </div>
+          <div class="mb-4">
+            <label for="input4" class="block mb-2">Filiere :</label>
+            <input
+              type="text"
+              id="input4"
+              name="filiere"
+              value="${user.dataValues.filiere}"
+              class="w-full bg-gray-200 p-2 rounded"
+              disabled
+            />
+          </div>
+          <div class="mb-4">
+            <label for="input5" class="block mb-2">Ville :</label>
+            <input
+              type="text"
+              id="input5"
+              name="ville"
+              value="${user.dataValues.ville}"
+              class="w-full bg-gray-200 p-2 rounded"
+              disabled
+            />
+          </div>
+          <div class="mb-4">
+            <label for="input5" class="block mb-2">Email :</label>
+            <input
+              type="text"
+              id="input5"
+              name="email"
+              value="${user.dataValues.user.email}"
+              class="w-full bg-gray-200 p-2 rounded"
+              disabled
+            />
+          </div>
+          <div class="mb-4">
+            <label for="input5" class="block mb-2">CIN :</label>
+            <input
+              type="text"
+              id="input5"
+              name="cin"
+              value="${user.dataValues.user.cin}"
+              class="w-full bg-gray-200 p-2 rounded"
+              disabled
+            />
+          </div>
+          <div class="mb-4">
+            <label for="file1" class="block mb-2">CV :</label>
+            <input
+              type="file"
+              id="file1"
+              name="cv"
+              class="w-full bg-gray-200 p-2 rounded"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="file2" class="block mb-2">Lettre de motivation:</label>
+            <input
+              type="file"
+              id="file2"
+              name="letter"
+              class="w-full bg-gray-200 p-2 rounded"
+            />
+          </div>
+          <button
+            id="submitButton"
+            type="submit"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          >
+            Upload
+          </button>
+        </form>
+      </div>
+    </div>
+    <script>
+      const form = document.getElementById("uploadForm");
+      const submitButton = document.getElementById("submitButton");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+        formData.append("etudiantId", "${user.dataValues.id}");
+        formData.append("stageId", "${stage.id}");
+        const url = "/api/upload";
+
+        try {
+          const response = await axios.post(url, formData,{headers:{"Content-Type": "multipart/form-data"}});
+
+          if (response.status == 200) {
+            window.location.href = "http://localhost:3000/dashboard";
+          } else {
+            alert("Upload failed!");
+          }
+        } catch (error) {
+          console.error(error);
+          alert("An error occurred during upload!");
+        }
+      });
+    </script>
+  </body>
+</html>

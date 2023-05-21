@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestion des responsable stages</title>
+    <!-- Chargement des styles de Tailwind -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"
+      integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+  </head>
+  <body
+    class="w-full h-full"
+    style="
+      background: linear-gradient(
+          rgba(139, 200, 240, 0.5),
+          rgba(105, 196, 235, 0.5)
+        ),
+        url('https://static.vecteezy.com/ti/vecteur-libre/t2/1874129-abstrait-bleu-ondule-vectoriel.jpg');
+      background-size: cover;
+      background-repeat: no-repeat; ">
+    <div class="flex justify-between items-center bg-white border-b border-gray-200 px-6 py-4" >
+      <div class="bg-white container mx-auto mt-12 p-4">
+        <h1 class="text-center text-2xl font-bold mb-4">
+          Gestion des responsable stages
+        </h1>
+
+        <!-- Formulaire d'ajout d'un nouvel responsable de stage -->
+        <div class="mb-20">
+          <h2 class="text-xl font-bold mb-12">Modifier responsable de stage</h2>
+          <form class="flex flex-col md:flex-row md:items-center">
+            <input
+              class="border border-gray-400 py-2 rounded-md mb-2 md:mr-2 md:mb-0"
+              type="text"
+              id="cin"
+              value="${e.cin}"
+              placeholder="cin  "
+            />
+            <input
+              class="border border-gray-400 p-2 rounded-md mb-2 md:mr-2 md:mb-0"
+              type="text"
+              id="nom"
+              value="${e.nom}"
+              placeholder="Nom  "
+            />
+            <input
+              class="border border-gray-400 p-2 rounded-md mb-2 md:mr-2 md:mb-0"
+              type="text"
+              id="prenom"
+              value="${e.prenom}"
+              placeholder="Prenom"
+            />
+            <input
+              class="border border-gray-400 p-2 rounded-md mb-2 md:mr-2 md:mb-0"
+              type="text"
+              id="email"
+              value="${e.email}"
+              placeholder="Email "
+            />
+            <input
+              class="border border-gray-400 p-2 rounded-md mb-2 md:mr-2 md:mb-0"
+              type="text"
+              id="telephone"
+              value="${e.telephone}"
+              placeholder="Téléphone "
+            />
+            <input
+              class="border border-gray-400 p-2 rounded-md mb-2 md:mr-2 md:mb-0"
+              type="text"
+              id="specialite"
+              value="${e.specialite}"
+              placeholder="Specialite "
+            />
+            <input
+              class="border border-gray-400 p-2 rounded-md mb-2 md:mr-2 md:mb-0"
+              type="text"
+              id="adresse"
+              value="${e.adresse}"
+              placeholder="Adresse "
+            />
+          </form>
+        </div>
+        <div class="flex justify-center">
+          <button
+            class="bg-blue-300 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
+            id="editresponsable_stageBTN">
+            Modifier
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    const editresponsable_stage = document.getElementById("editresponsable_stageBTN");
+    editresponsable_stage.addEventListener("click", (event) => {
+      event.preventDefault();
+    const responsable_stage = {
+        cin: document.getElementById("cin").value,
+        nom: document.getElementById("nom").value,
+        prenom: document.getElementById("prenom").value,
+        email: document.getElementById("email").value,
+        telephone: document.getElementById("telephone").value,
+        specialite: document.getElementById("specialite").value,
+        adresse: document.getElementById("adresse").value,
+   };
+    
+      axios.post(
+          "http://localhost:3000/admin/updateresponsable_stage/${e.id}", responsable_stage
+        )
+        .then((data) => {
+          if (data.data.success) {
+            window.location.href ="/admin/responsable_stage";
+          } else {
+            alert("Erreur lors de la modification de stage");
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    });
+  </script>
+</html>

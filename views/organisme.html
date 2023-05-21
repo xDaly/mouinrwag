@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestion des organismes</title>
+    <!-- Chargement des styles de Tailwind -->
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"
+      integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+  </head>
+  <body
+    class="w-full h-full"
+    style="
+      background: linear-gradient(
+          rgba(139, 200, 240, 0.5),
+          rgba(105, 196, 235, 0.5)
+        ),
+        url('https://static.vecteezy.com/ti/vecteur-libre/t2/1874129-abstrait-bleu-ondule-vectoriel.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+    "
+  >
+    <div class="bg-white container mx-auto mt-4 p-4">
+      <h1 class="text-center text-2xl font-bold mb-4">
+        Gestion des organismes
+      </h1>
+
+      <!-- Formulaire d'ajout d'un nouvel organisme -->
+      <div class="mb-8">
+        <a href="/dashboard">Dashboard</a>
+        <h2 class="text-xl font-bold mb-2">Ajouter un nouvel organisme</h2>
+        <form class="flex flex-col md:flex-row md:items-center">
+          <input
+            class="border border-gray-400 p-2 rounded-md mb-2 md:mr-2 md:mb-0"
+            type="text"
+            id="code_organisme"
+            placeholder="Code de l'organisme"
+          />
+          <input
+            class="border border-gray-400 p-2 rounded-md mb-2 md:mr-2 md:mb-0"
+            type="text"
+            id="nom_organisme"
+            placeholder="Nom de l'organisme"
+          />
+          <input
+            class="border border-gray-400 p-2 rounded-md mb-2 md:mr-2 md:mb-0"
+            type="text"
+            id="adresse_organisme"
+            placeholder="Adresse de l'organisme"
+          />
+          <input
+            class="border border-gray-400 p-2 rounded-md mb-2 md:mr-2 md:mb-0"
+            type="text"
+            id="telephone_organisme"
+            placeholder="Téléphone de l'organisme"
+          />
+          <input
+            class="border border-gray-400 p-2 rounded-md mb-2 md:mr-2 md:mb-0"
+            type="text"
+            id="email_organisme"
+            placeholder="Email de l'organisme"
+          />
+          <input
+            class="border border-gray-400 p-2 rounded-md mb-2 md:mr-2 md:mb-0"
+            type="text"
+            id="secteur_activite"
+            placeholder="Secteur d'activite"
+          />
+        </form>
+      </div>
+      <div class="flex justify-center">
+        <button
+          class="bg-blue-300 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
+          id="addOrganisme"
+        >
+          Ajouter
+        </button>
+      </div>
+      <!-- Liste des organismes -->
+      <div>
+        <h2 class="text-xl font-bold mb-2">Liste des organismes</h2>
+        <table class="w-full table-auto">
+          <thead>
+            <tr>
+              <th class="px-4 py-2">Code</th>
+              <th class="px-4 py-2">Nom</th>
+              <th class="px-4 py-2">Adresse</th>
+              <th class="px-4 py-2">Téléphone</th>
+              <th class="px-4 py-2">Email</th>
+              <th class="px-4 py-2">Secteur d'activite</th>
+              <th class="px-4 py-2">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Exemple de ligne pour un organisme -->
+            ${ organismes.map((e) => { return `
+            <tr>
+              <td class="border px-4 py-2">${e.code_organisme}</td>
+              <td class="border px-4 py-2">${e.nom_organisme}</td>
+              <td class="border px-4 py-2">${e.adresse_organisme}</td>
+              <td class="border px-4 py-2">${e.telephone_organisme}</td>
+              <td class="border px-4 py-2">${e.email_organisme}</td>
+              <td class="border px-4 py-2">${e.secteur_activite}</td>
+              <td class="border px-4 py-2">
+                <a
+                  class="bg-blue-300 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
+                  type="button"
+                  href="/admin/editorganisme/${e.id}"
+                >
+                  Modifier
+                </a>
+                <button
+                  class="bg-blue-300 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
+                  type="button"
+                  onclick="deleteOrganisme('${e.id}')"
+                >
+                  Supprimer
+                </button>
+              </td>
+            </tr>
+            ` }).join('') }
+            <!-- Fin de l'exemple -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+  <script>
+    const addOrganisme = document.getElementById("addOrganisme");
+    addOrganisme.addEventListener("click", (e) => {
+      const organisme = {
+        code_organisme: document.getElementById("code_organisme").value,
+        nom_organisme: document.getElementById("nom_organisme").value,
+        adresse_organisme: document.getElementById("adresse_organisme").value,
+        telephone_organisme: document.getElementById("telephone_organisme")
+          .value,
+        email_organisme: document.getElementById("email_organisme").value,
+        secteur_activite: document.getElementById("secteur_activite").value,
+      };
+      e.preventDefault();
+      axios
+        .post("http://localhost:3000/admin/addOrganisme", organisme)
+        .then((data) => {
+          if (data.data.success) {
+            window.location.reload();
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    });
+
+    function deleteOrganisme(id) {
+      axios
+        .delete("http://localhost:3000/admin/deleteOrganisme/" + id)
+        .then((res) => {
+          console.log(res);
+          if (res.data.success) {
+            window.location.reload();
+          }
+        });
+    }
+  </script>
+</html>

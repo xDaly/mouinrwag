@@ -1,0 +1,14 @@
+add rote + database
+add guard :
+  auth guard 
+  role guard
+edit dashboard by role .
+
+ python : 
+1- send photo tp script .
+2- return user info after matching .
+ dashboard :
+page profile 
+page access history 
+page anomalies 
+

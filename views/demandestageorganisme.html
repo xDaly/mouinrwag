@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/1.1.2/tailwind.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js" integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+      integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
+      integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
+      crossorigin="anonymous"
+    ></script>
+    <!--Bootstrap Icon -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <!--Google Font-->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <style>
+    body {
+  font-family: "Lato", sans-serif;
+}
+
+:root {
+  --primary: blue;
+}
+
+.justify {
+  text-align: justify;
+}
+
+.text-purple {
+  color: var(--primary);
+}
+
+.bg-purple {
+  background-color: var(--primary);
+  color: white;
+}
+
+  </style>
+  <body>
+    <nav class="nav bg-purple justify-content-center">
+      <a class="nav-link text-white" href="/organisme/dashboardorganisme"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
+      <!-- <a class="nav-link text-white" href="#">Services</a> -->
+      <a class="nav-link text-white" id="logoutbtn">Logout <i class="fa fa-sign-out" aria-hidden="true"></i></a>
+    </nav>
+    
+    <div class="container py-5">
+      <div class="row">
+        <div class="col-lg-12 p-5">
+          <h1> <i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard</h1>
+          <hr />
+        </div>
+      </div>
+      <div>
+ 
+      </div>
+      <div class="row">
+        <div class="container mx-auto px-4 sm:px-8">
+          <div class="py-8">
+            <div>
+              <h2 class="text-2xl font-semibold leading-tight">Liste des demande disponnible</h2>
+            </div>
+            <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+              <div
+                class="inline-block min-w-full shadow-md rounded-lg overflow-hidden"
+              >
+                <table class="min-w-full leading-normal">
+                  <thead>
+                    <tr>
+                      <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                      >
+                      code stage
+                      </th>
+                      <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                      >
+                      cv
+                      </th>
+                      <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                      >
+                        lettre de motivation
+                      </th>
+                      <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                      >
+                      nom de l'etudiant
+                      </th>
+                      <th
+                      class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider"
+                    >
+                    etat
+                    </th>
+                      
+                      <th
+                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100"
+                      ></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${ demandes.map((demande) => {
+                      return `   <tr>
+                          <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                              <p class="text-gray-900 whitespace-no-wrap">${demande.stage.code_stage}</p>
+                            </td>
+                          <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                            <a href="${demande.cv_path}" class="text-gray-900 whitespace-no-wrap">telecharger le cv</a>
+                          </td>
+                          <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                            <a  href="${demande.letter_path}" class="text-gray-900 whitespace-no-wrap">telecharger la lettre de motivation</a>
+                          </td>
+                          <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                              <p class="text-gray-900 whitespace-no-wrap">${demande.etudiant.nom}</p>
+                          </td>
+                          <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                              <p class="text-gray-900 whitespace-no-wrap">${demande.etat}</p>
+                          </td>
+                          <td
+                          style="    display: flex;"
+                            class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-right"
+                          >
+                            <a
+                       onclick="updateStage('${demande.id}','accepter')"
+                              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                            >
+                             accepter
+                        </a>
+                        <a
+                        onclick="updateStage('${demande.id}','refuser')"
+
+                        class="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                      >
+                       refuser
+                  </a>
+                    
+                          </td>
+                        </tr>
+                        `} ).join('') }
+     
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div></div>
+    
+  
+    
+      </div>
+    </div>
+    
+
+    
+
+  </body>
+  <script>
+const updateStage = async (id,etat) => {
+  await  axios.put("/organisme/updatestage/",{
+      id:id,
+      etat:etat
+    }).then((res)=>{
+   if(res.data.success){
+    window.location.reload()
+   }
+    }).catch((err)=>{
+      alert(err)
+    })
+  }
+
+
+  const deleteStage = async (id) => {
+    axios.delete("/organisme/deletestage/"+id).then((res)=>{
+      window.location.href = 'http://localhost:3000/organisme/stages'
+    }).catch((err)=>{
+      console.log(err)
+    })
+  }
+
+ 
+    const logoutBTN = document.getElementById('logoutbtn');
+logoutBTN.addEventListener('click',async (e)=>{
+  e.preventDefault();
+await axios.post('http://localhost:3000/auth/logout').then((res)=>{
+   window.location.href = 'http://localhost:3000/auth/loginPage'
+}).catch((err)=>{
+  console.log(err)
+})
+})
+  </script>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
+ <style>
+     .table td{
+            padding:3px;
+        }
+
+
+        .table tbody tr td .btn-success{
+                padding: 2px 10px;
+                margin: 5px;
+                font-size :0.8em;
+        }
+
+        .table tbody tr td .btn-danger{
+                padding: 2px 10px;
+                margin: 5px;
+                font-size :0.8em;
+        }
+ </style>
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+ <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
+  </head>
+  <body>
+    <body style='padding: 25px;'>
+        <form enctype="multipart/form-data">
+            
+            <input id="upload" type=file name="files[]">
+          <br>
+             Give table header in  first row of excel
+          <br><br>
+        </form>
+      
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Code</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Qty</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class='txtcode'> </td>
+                        <td class='txtdesc'></td>
+                        <td class='txtprice'></td>
+                        <td class='txtqty'></td>
+                        <td><button type='button' class='btn btn-success'>Add</button> <button class='btn btn-danger' type='button'>Remove</button> </td>
+                    </tr>
+                    <tr>
+                        <td class='txtcode'> </td>
+                        <td class='txtdesc'></td>
+                        <td class='txtprice'></td>
+                        <td class='txtqty'></td>
+                        <td><button type='button' class='btn btn-success'>Add</button> <button class='btn btn-danger' type='button'>Remove</button> </td>
+                    </tr>
+                    <tr>
+                        <td class='txtcode'> </td>
+                        <td class='txtdesc'></td>
+                        <td class='txtprice'></td>
+                        <td class='txtqty'></td>
+                        <td><button type='button' class='btn btn-success'>Add</button> <button class='btn btn-danger' type='button'>Remove</button> </td>
+                    </tr>
+                    <tr>
+                        <td class='txtcode'> </td>
+                        <td class='txtdesc'></td>
+                        <td class='txtprice'></td>
+                        <td class='txtqty'></td>
+                        <td><button type='button' class='btn btn-success'>Add</button> <button class='btn btn-danger' type='button'>Remove</button> </td>
+                    </tr>
+                    <tr>
+                        <td class='txtcode'> </td>
+                        <td class='txtdesc'></td>
+                        <td class='txtprice'></td>
+                        <td class='txtqty'></td>
+                        <td><button type='button' class='btn btn-success'>Add</button> <button class='btn btn-danger' type='button'>Remove</button> </td>
+                    </tr>
+                    <tr>
+                        <td class='txtcode'> </td>
+                        <td class='txtdesc'></td>
+                        <td class='txtprice'></td>
+                        <td class='txtqty'></td>
+                        <td><button type='button' class='btn btn-success'>Add</button> <button class='btn btn-danger' type='button'>Remove</button> </td>
+                    </tr>
+                    <tr>
+                        <td class='txtcode'> </td>
+                        <td class='txtdesc'></td>
+                        <td class='txtprice'></td>
+                        <td class='txtqty'></td>
+                        <td><button type='button' class='btn btn-success'>Add</button> <button class='btn btn-danger' type='button'>Remove</button> </td>
+                    </tr>
+                    <tr>
+                        <td class='txtcode'> </td>
+                        <td class='txtdesc'></td>
+                        <td class='txtprice'></td>
+                        <td class='txtqty'></td>
+                        <td><button type='button' class='btn btn-success'>Add</button> <button class='btn btn-danger' type='button'>Remove</button> </td>
+                    </tr>
+                    <tr>
+                        <td class='txtcode'> </td>
+                        <td class='txtdesc'></td>
+                        <td class='txtprice'></td>
+                        <td class='txtqty'></td>
+                        <td><button type='button' class='btn btn-success'>Add</button> <button class='btn btn-danger' type='button'>Remove</button> </td>
+                    </tr>
+                    <tr>
+                        <td class='txtcode'> </td>
+                        <td class='txtdesc'></td>
+                        <td class='txtprice'></td>
+                        <td class='txtqty'></td>
+                        <td><button type='button' class='btn btn-success'>Add</button> <button class='btn btn-danger' type='button'>Remove</button> </td>
+                    </tr>
+                    <tr>
+                        <td class='txtcode'> </td>
+                        <td class='txtdesc'></td>
+                        <td class='txtprice'></td>
+                        <td class='txtqty'></td>
+                        <td><button type='button' class='btn btn-success'>Add</button> <button class='btn btn-danger' type='button'>Remove</button> </td>
+                    </tr>
+                    <tr>
+                        <td class='txtcode'> </td>
+                        <td class='txtdesc'></td>
+                        <td class='txtprice'></td>
+                        <td class='txtqty'></td>
+                        <td><button type='button' class='btn btn-success'>Add</button> <button class='btn btn-danger' type='button'>Remove</button> </td>
+                    </tr>
+                    <tr>
+                        <td class='txtcode'> </td>
+                        <td class='txtdesc'></td>
+                        <td class='txtprice'></td>
+                        <td class='txtqty'></td>
+                        <td><button type='button' class='btn btn-success'>Add</button> <button class='btn btn-danger' type='button'>Remove</button> </td>
+                    </tr>
+                    <tr>
+                        <td class='txtcode'> </td>
+                        <td class='txtdesc'></td>
+                        <td class='txtprice'></td>
+                        <td class='txtqty'></td>
+                        <td><button type='button' class='btn btn-success'>Add</button> <button class='btn btn-danger' type='button'>Remove</button> </td>
+                    </tr>
+                    <tr>
+                        <td class='txtcode'> </td>
+                        <td class='txtdesc'></td>
+                        <td class='txtprice'></td>
+                        <td class='txtqty'></td>
+                        <td><button type='button' class='btn btn-success'>Add</button> <button class='btn btn-danger' type='button'>Remove</button> </td>
+                    </tr>
+                </tbody>
+            </table>
+        
+    </body>
+  </body>
+  <script>
+     $(document).on('click', '.table tbody tr td .btn-success', function() {
+        var html = '';
+        html += "<tr><td class='txtcode'> </td>"
+        html += "<td class='txtdesc'></td>"
+        html += "<td class='txtprice'></td>"
+        html += "<td class='txtqty' ></td>"
+        html += "<td><button type='button' class='btn btn-success'>Add</button> <button class='btn btn-danger' type='button'>Remove</button> </td>"
+        html += "</tr>"
+
+        $(this).parent().parent().after(html)
+    })
+
+    $(document).on('click', '.table tbody tr td .btn-danger', function() {
+        $(this).parent().parent().remove()
+    })
+
+    var ExcelToJSON = function() {
+
+    this.parseExcel = function(file) {
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+            var data = e.target.result;
+            var workbook = XLSX.read(data, {
+                type: 'binary'
+            });
+            workbook.SheetNames.forEach(function(sheetName) {
+                // Here is your object
+                var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+                var json_object = JSON.stringify(XL_row_object);
+                productList = JSON.parse(json_object);
+
+                var rows = $('.table tbody tr', );
+                for (i = 0; i < productList.length; i++) {
+
+                    var columns = Object.values(productList[i])
+                    rows.eq(i).find('td.txtcode').text(columns[0]);
+                    rows.eq(i).find('td.txtdesc').text(columns[1]);
+                    rows.eq(i).find('td.txtprice').text(columns[2]);
+                    rows.eq(i).find('td.txtqty').text(columns[3]);
+                }
+
+            })
+        };
+        reader.onerror = function(ex) {
+            console.log(ex);
+        };
+
+        reader.readAsBinaryString(file);
+
+
+
+    };
+};
+
+function handleFileSelect(evt) {
+
+    var files = evt.target.files; // FileList object
+    var xl2json = new ExcelToJSON();
+    xl2json.parseExcel(files[0]);
+}
+
+document.getElementById('upload').addEventListener('change', handleFileSelect, false);
+  </script>
+</html>
+

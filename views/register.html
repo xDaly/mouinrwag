@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Espace Interne</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.7/tailwind.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js" integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body class="w-full h-full" style="
+  background: linear-gradient( rgba(139, 200, 240, 0.5), rgba(105, 196, 235, 0.5)), 
+ url('https://static.vecteezy.com/ti/vecteur-libre/t2/1874129-abstrait-bleu-ondule-vectoriel.jpg');
+ background-size: cover;
+background-repeat: no-repeat;">
+<script>
+ 
+</script>
+  <section class="bg-white max-w-lg mx-auto p-8 md:p-12 my-10 rounded-lg shadow-lg">
+  
+    <div class="flex justify-center">
+      <div class=" mx-auto">
+        <div class="flex justify-center">
+          <div class="h-64 w-64">
+            <img class="flex items-center justify-center "
+              src="https://png.pngtree.com/png-vector/20220526/ourmid/pngtree-online-registration-or-sign-up-login-for-account-on-smartphone-app-png-image_4740859.png">
+          </div>
+        </div>
+        ${selected === "organisme" ?  `
+        <form action="" id="signupFormOrganisme" m class=" mx-auto">
+          <div class="w-full flex mx-6 my-2">
+            <input class="mx-6 border-b-2  border-gray-300 outline-none shadow-sm " id="code_organisme" type="text"
+              placeholder="Code de l'organisme">
+            <input class="mx-6  border-b-2 order-gray-300  outline-none shadow-sm" id="nom_organisme" type="text"
+              placeholder="Nom de l'organisme">
+
+          </div>
+          <div class="flex mx-6 my-2 ">
+            <input class="mx-6 my-4 border-b-2 order-gray-300 outline-none shadow-sm " id="addresse_organisme" type="text"
+              placeholder="Addresse de l'organisme">
+            <input class="mx-6 my-4 border-b-2 order-gray-300  outline-none shadow-sm" id="telephone_organisme" type="text"
+              placeholder="Telephone de l'organisme">
+
+          </div>
+
+          <div class="flex mx-6 my-2">
+            <input class="mx-6 my-4 border-b-2 order-gray-300 outline-none shadow-sm " id="email_organisme" type="text"
+              placeholder="Email de l'organisme ">
+            <input class="mx-6 my-4 border-b-2 order-gray-300  outline-none shadow-sm" id="secteur_activite" type="text"
+              placeholder="Secteur d'activité">
+
+          </div>
+        
+      
+          <div class="flex justify-center">
+            <button
+              class="w-40 bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline"
+              type="submit">
+              S'inscrire
+            </button>
+          </div>
+
+        </form>
+        <script>
+          const signupFormOrganisme = document.getElementById('signupFormOrganisme');
+          signupFormOrganisme.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const code_organisme = document.getElementById('code_organisme').value;
+            const nom_organisme = document.getElementById('nom_organisme').value;
+            const addresse_organisme = document.getElementById('addresse_organisme').value;
+            const telephone_organisme = document.getElementById('telephone_organisme').value;
+            const email_organisme = document.getElementById('email_organisme').value;
+            const secteur_activite = document.getElementById('secteur_activite').value;
+            const data = {
+              code_organisme ,
+nom_organisme ,
+addresse_organisme ,
+telephone_organisme ,
+email_organisme ,
+secteur_activite 
+            }
+            console.log(data);
+            axios.post('http://localhost:3000/admin/addOrganisme', data)
+              .then((res) => {
+                console.log(res);
+                window.location.href = "http://localhost:3000/auth/loginPage";
+              })
+              .catch((err) => {
+                console.log(err);
+              })
+          })
+        </script>
+        ` : ``}
+        ${selected === "tuteur" ? `
+        <form action="" id="signupFormTuteur" m class=" mx-auto">
+          <div class="w-full flex mx-6 my-2">
+            <input class="mx-6 border-b-2  border-gray-300 outline-none shadow-sm " id="nom" type="text"
+              placeholder="Nom et Prenom">
+            <input class="mx-6  border-b-2 order-gray-300  outline-none shadow-sm" id="email" type="text"
+              placeholder="E-mail...">
+
+          </div>
+          <div class="flex mx-6 my-2 ">
+            <input class="mx-6 my-4 border-b-2 order-gray-300 outline-none shadow-sm " id="num" type="text"
+              placeholder="votre Num ">
+            <input class="mx-6 my-4 border-b-2 order-gray-300  outline-none shadow-sm" id="adresse" type="text"
+              placeholder="Adresse">
+
+          </div>
+
+          <div class="flex mx-6 my-2">
+            <input class="mx-6 my-4 border-b-2 order-gray-300 outline-none shadow-sm " id="fonctionnalite" type="text"
+              placeholder="Fonctionnalité ">
+            <input class="mx-6 my-4 border-b-2 order-gray-300  outline-none shadow-sm" id="secteur" type="text"
+              placeholder="Secteur d'activité">
+
+          </div>
+          <div class="flex mx-6 my-2">
+            <input class="mx-6 my-4 border-b-2 order-gray-300 outline-none shadow-sm " id="motpasse" type="text"
+              placeholder="Mot de passe">
+            <input class="mx-6 my-4 border-b-2 order-gray-300  outline-none shadow-sm" id="confirmer" type="text"
+              placeholder="confirmer ...">
+          </div>
+          ${selected !== "organisme" ? `
+
+          <div class="flex mx-6 my-2">
+            <label for="type" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Selecter votre type</label>
+            <select onchange="selectRole(event)" id="type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            ${organismes.map((o)=>{
+            return  `<option value="${o.id}">${o.nom_organisme}</option>`
+            })} 
+            </select>
+          </div>
+          ` : ``}
+          <div class="flex justify-center">
+            <button
+              class="w-40 bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline"
+              type="submit">
+              S'inscrire
+            </button>
+          </div>
+
+        </form>` : ``}
+        ${selected === "responsable" ?  `
+        <form action="" id="signupFormResponsable" m class=" mx-auto">
+          <div class="w-full flex mx-6 my-2">
+            <input class="mx-6 border-b-2  border-gray-300 outline-none shadow-sm " id="nom" type="text"
+              placeholder="Nom et Prenom">
+            <input class="mx-6  border-b-2 order-gray-300  outline-none shadow-sm" id="email" type="text"
+              placeholder="E-mail...">
+
+          </div>
+          <div class="flex mx-6 my-2 ">
+            <input class="mx-6 my-4 border-b-2 order-gray-300 outline-none shadow-sm " id="num" type="text"
+              placeholder="votre Num ">
+            <input class="mx-6 my-4 border-b-2 order-gray-300  outline-none shadow-sm" id="adresse" type="text"
+              placeholder="Adresse">
+
+          </div>
+
+          <div class="flex mx-6 my-2">
+            <input class="mx-6 my-4 border-b-2 order-gray-300 outline-none shadow-sm " id="fonctionnalite" type="text"
+              placeholder="Fonctionnalité ">
+            <input class="mx-6 my-4 border-b-2 order-gray-300  outline-none shadow-sm" id="secteur" type="text"
+              placeholder="Secteur d'activité">
+
+          </div>
+          <div class="flex mx-6 my-2">
+            <input class="mx-6 my-4 border-b-2 order-gray-300 outline-none shadow-sm " id="motpasse" type="text"
+              placeholder="Mot de passe">
+            <input class="mx-6 my-4 border-b-2 order-gray-300  outline-none shadow-sm" id="confirmer" type="text"
+              placeholder="confirmer ...">
+          </div>
+          ${selected !== "organisme" ? `
+
+          <div class="flex mx-6 my-2">
+            <label for="type" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Selecter votre type</label>
+            <select onchange="selectRole(event)" id="type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            ${organismes.map((o)=>{
+            return  `<option value="${o.id}">${o.nom_organisme}</option>`
+            })} 
+            </select>
+          </div>
+          ` : ``}
+          <div class="flex justify-center">
+            <button
+              class="w-40 bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline"
+              type="submit">
+              S'inscrire
+            </button>
+          </div>
+
+        </form>` : ``}
+
+      </div></div>
+    </section>
+</body>
+
+
+<script>
+  let signupForm = document.getElementById("signupForm");
+
+ signupForm.addEventListener("submit", (e) => {
+  let bodyData = {
+ nom : document.getElementById("nom").value,
+ email : document.getElementById("email").value,
+ num : document.getElementById("num").value,
+ addresse : document.getElementById("adresse").value,
+ fonctionnalite : document.getElementById("fonctionnalite").value,
+ secteur : document.getElementById("secteur").value,
+ motpasse : document.getElementById("motpasse").value,
+ type : document.getElementById("type").value,
+}
+   e.preventDefault();
+   axios.post('/auth/register', bodyData)
+
+});
+
+const selectRole = (e) => {
+  console.log(e.target.value);
+  selected = e.target.value
+}
+</script>
+
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+      integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
+      integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
+      crossorigin="anonymous"
+    ></script>
+    <!--Bootstrap Icon -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <!--Google Font-->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <style>
+    body {
+  font-family: "Lato", sans-serif;
+}
+
+:root {
+  --primary: blue;
+}
+
+.justify {
+  text-align: justify;
+}
+
+.text-purple {
+  color: var(--primary);
+}
+
+.bg-purple {
+  background-color: var(--primary);
+  color: white;
+}
+
+  </style>
+  <body>
+    <nav class="nav bg-purple justify-content-center">
+      <a class="nav-link text-white" href="/organisme/dashboardorganisme"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
+      <!-- <a class="nav-link text-white" href="#">Services</a> -->
+      <a class="nav-link text-white" href="#">Logout <i class="fa fa-sign-out" aria-hidden="true"></i></a>
+    </nav>
+    
+    <div class="container py-5">
+      <div class="row">
+        <div class="col-lg-12 p-5">
+          <h1> <i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard</h1>
+          <hr />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 col-sm-6 col-md-3 col-lg-2 p-2">
+          <a class="text-decoration-none" href="/organisme/stages">
+            <div class="card p-3 shadow bg-purple text-center border-0">
+              <div class="card-body">
+                <i class="fa fa-bookmark-o fa-2x" aria-hidden="true"></i>
+                <hr />
+                <p class="card-title lead">Stages</p>
+              </div>
+            </div>
+          </a>
+        </div>
+    
+        <!-- <div class="col-xs-6 col-sm-6 col-md-3 col-lg-2 p-2">
+          <a class="text-decoration-none" href="#">
+            <div class="card p-3 shadow bg-purple text-center border-0">
+              <div class="card-body">
+                <i class="fa fa-edit fa-2x" aria-hidden="true"></i>
+                <hr />
+                <p class="card-title lead">Taches</p>
+              </div>
+            </div>
+          </a>
+        </div> -->
+    
+        <div class="col-xs-6 col-sm-6 col-md-3 col-lg-2 p-2">
+          <a class="text-decoration-none" href="/organisme/demandestageorganisme">
+            <div class="card p-3 shadow bg-purple text-center border-0">
+              <div class="card-body">
+                <i class="fa fa-image fa-2x" aria-hidden="true"></i>
+                <hr />
+                <p class="card-title lead">Demandes</p>
+              </div>
+            </div>
+          </a>
+        </div>
+    
+
+    
+  
+    
+      </div>
+    </div>
+    
+
+    
+  
+  </body>
+</html>
