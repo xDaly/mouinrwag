@@ -70,7 +70,6 @@ exports.demandes = async (req, res) => {
       },
     });
 
-    console.log(demandes[0].stage);
     res.render("historiquedemande", {
       locals: { demandes: demandes },
     });
@@ -81,6 +80,7 @@ exports.demandes = async (req, res) => {
 
 exports.docs = async (req, res) => {
   if (await req.isAuthenticated()) {
+    let stage
     const user = await req.user;
     const etudiant = await Etudiant.findOne({
       where: {
@@ -90,21 +90,23 @@ exports.docs = async (req, res) => {
     const demande = await Demande.findOne({
       where: {
         etudiantId: etudiant.dataValues.id,
-        etat : "accepter"
-      }
-    })
-
-    const stage = await Stage.findByPk(demande.dataValues.stageId,{
-      include: ["organisme"],
+        etat: "accepter",
+      },
     });
+    if (demande) {  
+       stage = await Stage.findByPk(demande.dataValues.stageId, {
+        include: ["organisme"],
+      });
+    }
+    else {
+      stage : {}
+    }
 
-    console.log(stage);
-    res.render("etudiantdocstage",{
-      locals : {stage : stage}
+    res.render("etudiantdocstage", {
+      locals: { stage: stage },
     });
-
-  }else{
-    res.redirect('/auth/loginPage')
+  } else {
+    res.redirect("/auth/loginPage");
   }
 };
 
@@ -134,7 +136,7 @@ exports.updateUser = async (req, res) => {
     user.phone = phone;
   }
   if (firstname) {
-    user.firstname = firstname;
+    user.firstname = firstname; 
   }
   if (lastname) {
     user.lastname = lastname;

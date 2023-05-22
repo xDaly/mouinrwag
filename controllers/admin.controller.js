@@ -202,22 +202,22 @@ exports.enseignant = async (req, res) => {
 exports.addEnseignant = async (req, res) => {
   try {
     // console.log(enseignant);
-    // const enseignantValues = [
-    //   "UUID()",
-    //   `"${enseignant.cin}"`,
-    //   `"${enseignant.nom}"`,
-    //   `"${enseignant.prenom}"`,
-    //   `"${enseignant.email}"`,
-    //   `"${enseignant.mot_de_passe}"`,
-    //   `"${enseignant.telephone}"`,
-    //   `"${enseignant.addresse}"`,
-    //   `"${enseignant.specialite}"`,
-    //   `"${enseignant.role}"`,
-    // ];
-    // const enseignantQuery = `INSERT INTO users (id, cin, nom, prenom, email, mot_de_passe, telephone, addresse, specialite, role, createdAt, updatedAt) VALUES (${enseignantValues.join(
-    //   ", "
-    // )},NOW(),NOW())`;
-    // const enseignantResult = await sequelize.query(enseignantQuery);
+    //const enseignantValues = [
+    // "UUID()",
+   //  `"${enseignant.cin}"`,
+   //`"${enseignant.nom}"`,
+   //  `"${enseignant.prenom}"`,
+   //   `"${enseignant.email}"`,
+     // `"${enseignant.mot_de_passe}"`,
+     // `"${enseignant.telephone}"`,
+    //   `"${enseignant.ville}"`,
+    // `"${enseignant.specialite}"`,
+   //  `"${enseignant.role}"`,
+   // ];
+    //const enseignantQuery = `INSERT INTO users (id, cin, nom, prenom, email, mot_de_passe, telephone, ville, specialite, role, createdAt, updatedAt) VALUES (${enseignantValues.join(
+    //  ", "
+    //)},NOW(),NOW())`;
+     //const enseignantResult = await sequelize.query(enseignantQuery);
 
     const newEnseignantLoginData = await User.create({
       cin: req.body.cin,
@@ -232,7 +232,7 @@ exports.addEnseignant = async (req, res) => {
       prenom: req.body.prenom,
       email: req.body.email,
       mot_de_passe: req.body.cin,
-      ville: req.body.addresse,
+      ville: req.body.ville,
       telephone: req.body.telephone,
       specialite: req.body.specialite,
       role: "enseignant",
@@ -249,7 +249,7 @@ exports.addEnseignant = async (req, res) => {
 
 exports.getEnseignant = async (req, res) => {
   try {
-    const etudiantQuery = `SELECT * FROM users WHERE role = "etudiant"`;
+    const etudiantQuery = `SELECT * FROM  enseignants WHERE role = " enseignant"`;
     const etudiantResult = await sequelize.query(etudiantQuery, {
       type: QueryTypes.SELECT,
     });
@@ -272,7 +272,7 @@ exports.getEditEnseignant = async (req, res) => {
   });
 };
 
-exports.editEnseignant = async (req, res) => {
+exports.editenseignant = async (req, res) => {
   try {
     const update = {
       cin: req.body.cin,
@@ -281,13 +281,13 @@ exports.editEnseignant = async (req, res) => {
       email: req.body.email,
       mot_de_passe: req.body.cin,
       telephone: req.body.telephone,
-      addresse: req.body.addresse,
+      ville: req.body.ville,
       specialite: req.body.specialite,
       role: "enseignant",
     };
     // update etudiant to database using raw query
     const updated = await sequelize.query(
-      `UPDATE users SET cin = "${update.cin}", nom = "${update.nom}", prenom = "${update.prenom}", email = "${update.email}", mot_de_passe = "${update.mot_de_passe}", telephone = "${update.telephone}", addresse = "${update.addresse}", specialite = "${update.specialite}", role = "${update.role}" WHERE id = "${req.params.id}"`,
+      `UPDATE users SET cin = "${update.cin}", nom = "${update.nom}", prenom = "${update.prenom}", email = "${update.email}", mot_de_passe = "${update.mot_de_passe}", telephone = "${update.telephone}", ville = "${update.ville}", specialite = "${update.specialite}", role = "${update.role}" WHERE id = "${req.params.id}"`,
       { type: QueryTypes.UPDATE }
     );
 
@@ -302,7 +302,7 @@ exports.editEnseignant = async (req, res) => {
 exports.deleteEnseignant = async (req, res) => {
   try {
     const deleted = await sequelize.query(
-      `DELETE FROM users WHERE id = "${req.params.id}"`,
+      `DELETE FROM  enseignants WHERE id = "${req.params.id}"`,
       { type: QueryTypes.DELETE }
     );
 
@@ -327,7 +327,7 @@ const getEnseignants = async () => {
 
 const getEnseignantById = async (id) => {
   try {
-    const Query = `SELECT * FROM users WHERE id = "${id}"`;
+    const Query = `SELECT * FROM  enseignants WHERE id = "${id}"`;
     const Result = await sequelize.query(Query, {
       type: QueryTypes.SELECT,
     });
@@ -337,6 +337,7 @@ const getEnseignantById = async (id) => {
     return error;
   }
 };
+
 
 // organisme//
 

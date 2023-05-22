@@ -14,7 +14,7 @@ router.get("/enseignant", admin.enseignant);
 router.post("/addenseignant", admin.addEnseignant);
 // router.get("/getEtudiant", admin.getEtudiant);
 router.get("/editenseignant/:id", admin.getEditEnseignant);
-router.post("/updateenseignant/:id", admin.editEnseignant);
+router.post("/updateenseignant/:id", admin.editenseignant);
 router.delete("/deleteenseignant/:id", admin.deleteEnseignant);
 
 
@@ -26,7 +26,6 @@ router.post("/updateorganisme/:id", admin.editOrganisme);
 router.delete("/deleteOrganisme/:id", admin.deleteOrganisme);
 
 
-
 router.get("/stage", admin.stage);
 router.post("/addStage", admin.addStage);
 router.get("/editstage/:id", admin.getEditStage);
@@ -34,14 +33,12 @@ router.get("/editstage/:id", admin.getEditStage);
  router.post("/updatestage/:id", admin.editStage);
  router.delete("/deleteStage/:id", admin.deleteStage);
 
-
  router.get("/departement", admin.departement);
  router.post("/addDepartement", admin.addDepartement);
  router.get("/editdepartement/:id", admin.getEditDepartement);
  //router.get("/editedepartement/:id", admin.getDepartement);
  router.post("/updatedepartement/:id", admin.editDepartement);
  router.delete("/deleteDepartement/:id", admin.deleteDepartement);
-
 
  router.get("/responsable_stage", admin.responsable_stage);
  router.post("/addResponsable_stage", admin.addResponsable_stage);

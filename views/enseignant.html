@@ -65,7 +65,7 @@
               <th class="px-4 py-2">Specialité</th>
               <th class="px-4 py-2">Email</th>
               <th class="px-4 py-2">Numero télephone</th>
-              <th class="px-4 py-2">Addresse</th>
+              <th class="px-4 py-2">Ville</th>
               <th class="px-4 py-2">Actions</th>
             </tr>
           </thead>
@@ -200,12 +200,12 @@
               <label
                 for="visitors"
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >Addresse</label
+                >Ville</label
               >
               <input
-                id="addresse"
+                id="ville"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Addresse"
+                placeholder="ville"
                 
               />
             </div>
@@ -259,12 +259,6 @@
           modal.close();
         }
       });
-
-
-
- 
-
-
       const addenseignant = document.getElementById("addenseignant");
       addenseignant.addEventListener("click", (e) => {
         e.preventDefault();
@@ -273,7 +267,7 @@
         const email = document.getElementById("email").value;
         const cin = document.getElementById("cin").value;
         const telephone = document.getElementById("telephone").value;
-        const addresse = document.getElementById("addresse").value;
+        const ville = document.getElementById("ville").value;
         const specialite = document.getElementById("specialite").value;
         const data = {
           nom,
@@ -281,7 +275,7 @@
           email,
           cin,
           telephone,
-          addresse,
+          ville,
           specialite,
         };
 
@@ -299,7 +293,7 @@
       });
 
       function deleteEnseignant (id)  {
-        axios.delete("http://localhost:3000/admin/deleteetudient/"+id).then((res) => {
+        axios.delete("http://localhost:3000/admin/deleteenseignant/"+id).then((res) => {
           console.log(res);
           if (res.data.success) {
             window.location.reload();

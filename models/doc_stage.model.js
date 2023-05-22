@@ -6,6 +6,7 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: false,
       primaryKey: true,
     },
+   
     rapport_path: {
       type: Sequelize.STRING,
     },

@@ -1,11 +1,11 @@
 {
   "name": "gds",
   "version": "1.0.0",
-  "description": "",
   "main": "server.js",
   "type": "commonjs",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
@@ -28,5 +28,14 @@
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "sequelize": "^6.31.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xDaly/mouinrwag.git"
+  },
+  "bugs": {
+    "url": "https://github.com/xDaly/mouinrwag/issues"
+  },
+  "homepage": "https://github.com/xDaly/mouinrwag#readme",
+  "description": ""
 }

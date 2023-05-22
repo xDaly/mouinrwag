@@ -67,16 +67,16 @@
   
   <div class="info-section">
     <h2>Code Stage</h2>
-    <p>${stage.code_stage}</p>
+    <p>${stage?.code_stage}</p>
 
     <h2>Type</h2>
-    <p>${stage.type}</p>
+    <p>${stage?.type}</p>
 
     <h2>Duree</h2>
-    <p>${stage.duree}</p>
+    <p>${stage?.duree}</p>
 
     <h2>Nom du organisme</h2>
-    <p>${stage.organisme.dataValues.nom_organisme}</p>
+    <p>${stage?.organisme.dataValues.nom_organisme}</p>
   </div>
   
 
@@ -113,7 +113,7 @@
         const formData = new FormData();
         const file1 = document.getElementById("journal").files[0];
         formData.append("journal", file1);
-        formData.append("stageId", "${stage.id}");
+        formData.append("stageId", "${stage?.id}");
         const url = "/stage/docs";
         try {
           const response = await axios.post(url, formData,{headers:{"Content-Type": "multipart/form-data"}});
@@ -135,7 +135,7 @@
         const formData = new FormData();
         const file1 = document.getElementById("rapport").files[0];
         formData.append("rapport", file1);
-        formData.append("stageId", "${stage.id}");
+        formData.append("stageId", "${stage?.id}");
         const url = "/stage/docs";
         try {
           const response = await axios.post(url, formData,{headers:{"Content-Type": "multipart/form-data"}});
@@ -157,7 +157,7 @@
         const formData = new FormData();
         const file1 = document.getElementById("cdc").files[0];
         formData.append("cdc", file1);
-        formData.append("stageId", "${stage.id}");
+        formData.append("stageId", "${stage?.id}");
         const url = "/stage/docs";
         try {
           const response = await axios.post(url, formData,{headers:{"Content-Type": "multipart/form-data"}});
