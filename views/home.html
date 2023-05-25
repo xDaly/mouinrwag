@@ -1,99 +1,102 @@
-<!-- <!DOCTYPE html>
-<html>
-<body>
-  ${nav}
-    <h1>${title}</h1>
-    <main><p>The fastest javascript template string engine!</p></main>
-</body>
-</html> -->
-
-
-
 <!DOCTYPE html>
 <html lang="fr">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Page d'accueil</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
-</head>
-
-<body class="w-full h-full" style="
-  background: linear-gradient( rgba(24, 24, 24, 0.5), rgba(132, 133, 133, 0.5)), 
-  url('https://media-mcetv.ouest-france.fr/wp-content/uploads/2021/09/etudiants-tout-savoir-sur-la-convention-pour-un-stage-en-entreprise-22092021-min.jpeg');
-  background-size: cover; 
-  background-repeat: no-repeat;">
-  <header>
-    <nav class="bg-gray-300 shadow w-full h-full">
-      <div class="container mx-auto px-4">
-        <div class="flex justify-between items-center py-4">
-
-          <a class="font-bold text-xl text-gray-700 italic">Stagiére</a>
-          <ul class="flex">
-            <a 
-              class="bg-gray-300 hover:bg-gray-400 text-gray-700  p-2 rounded-full mr-4 w-40 text-center">Espace Interne 
-            </a>
-           </br>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page d'accueil</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body
+    class="w-full h-full"
+    style="
+      background: linear-gradient(
+          rgba(24, 24, 24, 0.5),
+          rgba(132, 133, 133, 0.5)
+        ),
+        url('https://media-mcetv.ouest-france.fr/wp-content/uploads/2021/09/etudiants-tout-savoir-sur-la-convention-pour-un-stage-en-entreprise-22092021-min.jpeg');
+      background-size: cover;
+      background-repeat: no-repeat;
+    "
+  >
+    <header>
+      <nav class="bg-gray-300 shadow w-full h-full">
+        <div class="container mx-auto px-4">
+          <div class="flex justify-between items-center py-4">
+            <a class="font-bold text-xl text-gray-700 italic">Stagiaire</a>
+            <ul class="flex">
+              <a
+                class="bg-gray-300 hover:bg-gray-400 text-gray-700 p-2 rounded-full mr-4 w-40 text-center"
+                >Espace Interne</a
+              >
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <section class="container mx-auto mt-24">
+      <div class="container mx-auto p-40">
+        <h1 class="text-3xl font-bold text-center mb-8 text-white">
+          Bienvenue sur l'application de gestion et suivi des stages
+        </h1>
+        <p class="text-center m-2 text-blue-100 text-md Times New Roman">
+          Notre application vous permet de gérer et de suivre les stages de vos
+          étudiants de manière simple et efficace. Vous pouvez facilement
+          ajouter de nouveaux stages, suivre l'évolution des stages en cours et
+          consulter l'historique des stages terminés.
+        </p>
+        <br />
+        <div class="flex justify-center">
+          <!-- Bouton S'inscrire -->
+          <a
+            href="/auth/registertype"
+            class="bg-blue-400 hover:bg-blue-500 text-white font-md p-2 rounded-full w-40 text-center m-2"
+            >Register</a
+          >
+          <br /><br />
+          <!-- Bouton Se connecter -->
+          <a
+            href="/auth/loginPage"
+            class="bg-blue-400 hover:bg-blue-500 text-white font-md p-2 rounded-full w-40 text-center m-2"
+            >Login</a
+          >
+        </div>
+        <div class="flex justify-center">
+          <!-- Bouton S'inscrire -->
+          <a
+            href="/organisme/loginOrganisme"
+            class="bg-blue-400 hover:bg-blue-500 text-white font-md p-2 rounded-full w-40 text-center m-2"
+            >Espace Organisme</a
+          >
+          <br /><br />
+          <a
+          href="/organisme/loginOrganisme"
+          class="bg-blue-400 hover:bg-blue-500 text-white font-md p-2 rounded-full w-40 text-center m-2"
+          >Espace Tuteur</a
+        > </div>
+      </div>
+    </section>
+    <footer
+      class="bg-gray-300 text-gray-700 py-4"
+      style="position: absolute; bottom: 0; width: 100%"
+    >
+      <div class="container mx-auto flex justify-between">
+        <div>
+          <p class="text-sm font-bold">© 2023 Gestion et Suivi des Stages</p>
+          <p class="text-sm">Tous droits réservés.</p>
+        </div>
+        <div>
+          <ul class="flex space-x-4">
+            <li><a class="hover:text-gray-400">Conditions d'utilisation</a></li>
+            <li>
+              <a class="hover:text-gray-400">Politique de confidentialité</a>
+            </li>
+            <li><a class="hover:text-gray-400">Contactez-nous</a></li>
           </ul>
         </div>
       </div>
-    </nav>
-  </header>
-  <section class="container mx-auto mt-24">
-    <div class="container mx-auto p-40">
-      <h1 class="text-3xl font-bold text-center mb-8 text-white">Bienvenue sur l'application de gestion et suivi des
-        stages </h1>
-      <p class="text-center m-2 text-blue-100 text-md Times New Roman">Notre application vous permet de gérer et de suivre les
-        stages de vos étudiants de manière simple et efficace. Vous pouvez facilement ajouter de nouveaux stages, suivre
-        l'évolution des stages en cours et consulter l'historique des stages terminés.</p>
-      </br>
-      <div class="flex justify-center ">
-        <!-- Bouton S'inscrire -->
-        <a 
-        href="/auth/registertype"
-          class="bg-blue-400 hover:bg-blue-500 text-white font-md p-2 rounded-full w-40 text-center m-2 ">Register</a>
-        </br></br>
-        <!-- Bouton Se connecter -->
-        <a
-        href="/auth/loginPage"
-          class="bg-blue-400 hover:bg-blue-500 text-white font-md p-2 rounded-full w-40 text-center m-2 ">Login</a>
-      </div>
-      <div class="flex justify-center ">
-        <!-- Bouton S'inscrire -->
-        <a 
-        href="/organisme/loginOrganisme"
-          class="bg-blue-400 hover:bg-blue-500 text-white font-md p-2 rounded-full w-40 text-center m-2 ">Espace Organisme</a>
-        </br></br>
-        <!-- Bouton Se connecter -->
-        <!-- <a
-        href="/auth/loginPage"
-          class="bg-blue-400 hover:bg-blue-500 text-white font-md p-2 rounded-full w-40 text-center m-2 ">Login</a> -->
-      </div>
-    </div>
-  </section>
-  <footer class="bg-gray-300 text-gray-700 py-4" 
-  style="position: absolute;bottom:0;width:100%"
-  >
-    <div class="container mx-auto flex justify-between">
-      <div>
-        <p class="text-sm font-bold">© 2023 Gestion et Suivi des Stages</p>
-        <p class="text-sm">Tous droits réservés.</p>
-      </div>
-      <div>
-        <ul class="flex space-x-4">
-          <li>
-            <a  class="hover:text-gray-400">Conditions d'utilisation</a>
-          </li>
-          <li>
-            <a  class="hover:text-gray-400">Politique de confidentialité</a>
-          </li>
-          <li>
-            <a  class="hover:text-gray-400">Contactez-nous</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </footer>
+    </footer>
   </body>
 </html>

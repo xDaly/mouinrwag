@@ -6,31 +6,15 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false,
             primaryKey: true
         },
-        nom_et_prenom: {
+        code_tuteur: {
             type: Sequelize.STRING,
             allowNull: false,
         },
-        email: {
+        nom: {
             type: Sequelize.TEXT,
             allowNull: false
         },
-        telephone: {
-            type: Sequelize.TEXT,
-            allowNull: false
-        },
-        addresse: {
-            type: Sequelize.TEXT,
-            allowNull: false 
-        },
-        fonctionnalite: {
-            type: Sequelize.TEXT,
-            allowNull: false
-        },
-        secteur_activite: {
-            type: Sequelize.TEXT,
-            allowNull: false
-        },
-        mot_de_passe: {
+        fonction: {
             type: Sequelize.TEXT,
             allowNull: false
         },

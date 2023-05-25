@@ -108,7 +108,8 @@
 const { QueryTypes } = require("sequelize");
 const passport = require("passport");
 const db = require("../models");
-const User = db.users;
+const User = db.user;
+const Tuteur = db.tuteur;
 const LocalStrategy = require("passport-local").Strategy;
 
 const sequelize = db.sequelize;
@@ -177,6 +178,34 @@ exports.register = async (req, res) => {
       message: "Erreur lors de l'ajout du tuteur",
     });
   }
+};
+
+exports.registertuteur = async (req, res) => {
+  try {
+  const user = await User.create({
+    cin: req.body.code_tuteur,
+    email: req.body.code_tuteur,
+    mot_de_passe: req.body.code_tuteur,
+    role: "tuteur",
+  });
+  const tuteur = await Tuteur.create({
+    code_tuteur: req.body.code_tuteur,
+    fonction: req.body.fonction,
+    nom: req.body.nom,
+    userId : user.id,
+    organismeId: req.body.organismeID,
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "Tuteur ajouté avec succés",
+  });
+} catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+    });
+}
 };
 
 // exports.login = async (req, res) => {

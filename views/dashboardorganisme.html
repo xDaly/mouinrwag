@@ -12,6 +12,13 @@
       crossorigin="anonymous"
     />
     <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"
+      integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <script
       src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
       integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
       crossorigin="anonymous"
@@ -29,38 +36,41 @@
   </head>
   <style>
     body {
-  font-family: "Lato", sans-serif;
-}
+      font-family: "Lato", sans-serif;
+    }
 
-:root {
-  --primary: blue;
-}
+    :root {
+      --primary: blue;
+    }
 
-.justify {
-  text-align: justify;
-}
+    .justify {
+      text-align: justify;
+    }
 
-.text-purple {
-  color: var(--primary);
-}
+    .text-purple {
+      color: var(--primary);
+    }
 
-.bg-purple {
-  background-color: var(--primary);
-  color: white;
-}
-
+    .bg-purple {
+      background-color: var(--primary);
+      color: white;
+    }
   </style>
   <body>
     <nav class="nav bg-purple justify-content-center">
-      <a class="nav-link text-white" href="/organisme/dashboardorganisme"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
+      <a class="nav-link text-white" href="/organisme/dashboardorganisme"
+        ><i class="fa fa-home" aria-hidden="true"></i> Home</a
+      >
       <!-- <a class="nav-link text-white" href="#">Services</a> -->
-      <a class="nav-link text-white" href="#">Logout <i class="fa fa-sign-out" aria-hidden="true"></i></a>
+      <a class="nav-link text-white" id="logoutbtn"
+        >Logout <i class="fa fa-sign-out" aria-hidden="true"></i
+      ></a>
     </nav>
-    
+
     <div class="container py-5">
       <div class="row">
         <div class="col-lg-12 p-5">
-          <h1> <i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard</h1>
+          <h1><i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard</h1>
           <hr />
         </div>
       </div>
@@ -76,7 +86,7 @@
             </div>
           </a>
         </div>
-    
+
         <!-- <div class="col-xs-6 col-sm-6 col-md-3 col-lg-2 p-2">
           <a class="text-decoration-none" href="#">
             <div class="card p-3 shadow bg-purple text-center border-0">
@@ -88,9 +98,12 @@
             </div>
           </a>
         </div> -->
-    
+
         <div class="col-xs-6 col-sm-6 col-md-3 col-lg-2 p-2">
-          <a class="text-decoration-none" href="/organisme/demandestageorganisme">
+          <a
+            class="text-decoration-none"
+            href="/organisme/demandestageorganisme"
+          >
             <div class="card p-3 shadow bg-purple text-center border-0">
               <div class="card-body">
                 <i class="fa fa-image fa-2x" aria-hidden="true"></i>
@@ -100,16 +113,21 @@
             </div>
           </a>
         </div>
-    
-
-    
-  
-    
       </div>
     </div>
-    
-
-    
-  
   </body>
+  <script>
+    const logoutBTN = document.getElementById("logoutbtn");
+    logoutBTN.addEventListener("click", async (e) => {
+      e.preventDefault();
+      await axios
+        .post("http://localhost:3000/auth/logout")
+        .then((res) => {
+          window.location.href = "http://localhost:3000/";
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+  </script>
 </html>

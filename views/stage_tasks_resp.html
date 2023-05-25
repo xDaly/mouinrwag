@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Task Management</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    
+    th {
+      background-color: #f2f2f2;
+    }
+    
+    button {
+      padding: 6px 12px;
+      border: none;
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+    }
+    
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    // JavaScript functions here...
+  </script>
+</head>
+<body>
+  <table>
+    <thead>
+      <tr>
+        <th>Task Name</th>
+        <th>Task Description</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Task 1</td>
+        <td>Task 1 description</td>
+        <td>
+          <button onclick="markInProgress(1)">In Progress</button>
+          <button onclick="markDone(1)">Done</button>
+        </td>
+      </tr>
+      <tr>
+        <td>Task 2</td>
+        <td>Task 2 description</td>
+        <td>
+          <button onclick="markInProgress(2)">In Progress</button>
+          <button onclick="markDone(2)">Done</button>
+        </td>
+      </tr>
+      <!-- Add more task rows as needed -->
+    </tbody>
+  </table>
+</body>
+</html>

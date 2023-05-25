@@ -34,7 +34,7 @@ app.use(
     saveUninitialized: false,
   })
 );
-
+ 
 app.use(passport.initialize());
 app.use(passport.session());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
@@ -161,7 +161,6 @@ passport.use(
           where: { cin: username },
           raw: true,
         });
-        //  console.log(user);
         if (!user || user.length === 0) {
           return done(null, false, { message: "Incorrect cin." });
         }
@@ -174,7 +173,7 @@ passport.use(
         return done(err);
       }
     }
-  )
+  ) 
 );
 
 passport.serializeUser((user, done) => {

@@ -79,11 +79,11 @@ exports.addEtudiant = async (req, res) => {
     //   });
     res.json({
       success: true,
-    }); 
+    });
   } catch (error) {
     console.log(error);
     res.json({ error });
-  } 
+  }
 };
 
 exports.getEtudiant = async (req, res) => {
@@ -99,7 +99,7 @@ exports.getEtudiant = async (req, res) => {
   } catch (error) {
     res.json({ error });
   }
-}; 
+};
 
 exports.import = async (req, res) => {
   res.render("importetudient");
@@ -158,7 +158,7 @@ exports.deleteEtudiant = async (req, res) => {
   }
 };
 
-const getEtudiants = async () => { 
+const getEtudiants = async () => {
   try {
     const etudiantQuery = `SELECT * FROM etudiants `;
     const etudiantResult = await sequelize.query(etudiantQuery, {
@@ -191,12 +191,23 @@ const getEtudiantById = async (id) => {
 // enseignant
 
 exports.enseignant = async (req, res) => {
-  const data = await getEnseignants();
-  res.render("enseignant", {
-    locals: {
-      enseignants: data,
-    },
-  });
+  try {
+    const data = await Enseignant.findAll({
+      include: ["user"],
+    });
+    console.log(data);
+    res.render("enseignant", {
+      locals: {
+        enseignants: data,
+      },
+    });
+  } catch (error) {
+    res.render("enseignant", {
+      locals: {
+        enseignants: [],
+      },
+    });
+  }
 };
 
 exports.addEnseignant = async (req, res) => {
@@ -263,8 +274,13 @@ exports.getEnseignant = async (req, res) => {
 };
 
 exports.getEditEnseignant = async (req, res) => {
-  const Result = await getEnseignantById(req.params.id);
-
+  const Result = await Enseignant.findAll({
+    include: ["user"],
+    where: {
+      id: req.params.id,
+    },
+  });
+  console.log("Result", Result);
   res.render("editeenseignant", {
     locals: {
       enseignant: Result[0],
@@ -281,15 +297,21 @@ exports.editEnseignant = async (req, res) => {
       email: req.body.email,
       mot_de_passe: req.body.cin,
       telephone: req.body.telephone,
-      addresse: req.body.addresse,
+      ville: req.body.addresse,
       specialite: req.body.specialite,
       role: "enseignant",
     };
+    await Enseignant.update(update, {
+      where: {
+        id: req.params.id,
+      },
+    });
+
     // update etudiant to database using raw query
-    const updated = await sequelize.query(
-      `UPDATE users SET cin = "${update.cin}", nom = "${update.nom}", prenom = "${update.prenom}", email = "${update.email}", mot_de_passe = "${update.mot_de_passe}", telephone = "${update.telephone}", addresse = "${update.addresse}", specialite = "${update.specialite}", role = "${update.role}" WHERE id = "${req.params.id}"`,
-      { type: QueryTypes.UPDATE }
-    );
+    // const updated = await sequelize.query(
+    //   `UPDATE users SET cin = "${update.cin}", nom = "${update.nom}", prenom = "${update.prenom}", email = "${update.email}", mot_de_passe = "${update.mot_de_passe}", telephone = "${update.telephone}", ville = "${update.addresse}", specialite = "${update.specialite}", role = "${update.role}" WHERE id = "${req.params.id}"`,
+    //   { type: QueryTypes.UPDATE }
+    // );
 
     res.json({
       success: true,
@@ -301,10 +323,18 @@ exports.editEnseignant = async (req, res) => {
 
 exports.deleteEnseignant = async (req, res) => {
   try {
-    const deleted = await sequelize.query(
-      `DELETE FROM users WHERE id = "${req.params.id}"`,
-      { type: QueryTypes.DELETE }
-    );
+    console.log(req.params);
+
+    await Enseignant.destroy({
+      where: {
+        userId: req.params.id,
+      },
+    });
+    await User.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
 
     res.json({
       success: true,
@@ -356,21 +386,36 @@ exports.addOrganisme = async (req, res) => {
       email_organisme: req.body.email_organisme,
       secteur_activite: req.body.secteur_activite,
     };
+    const newUser = await User.create({
+      cin: req.body.code_organisme,
+      email: req.body.email_organisme,
+      mot_de_passe: req.body.code_organisme,
+      role: "organisme",
+    });
+    const newOrganisme = await Organisme.create({
+      code_organisme: req.body.code_organisme,
+      nom_organisme: req.body.nom_organisme,
+      adresse_organisme: req.body.adresse_organisme,
+      telephone_organisme: req.body.telephone_organisme,
+      email_organisme: req.body.email_organisme,
+      secteur_activite: req.body.secteur_activite,
+      userId: newUser.id,
+    });
 
     // console.log(organisme);
-    const organismeValues = [
-      "UUID()",
-      `"${organisme.code_organisme}"`,
-      `"${organisme.nom_organisme}"`,
-      `"${organisme.adresse_organisme}"`,
-      `"${organisme.telephone_organisme}"`,
-      `"${organisme.email_organisme}"`,
-      `"${organisme.secteur_activite}"`,
-    ];
-    const Query = `INSERT INTO organismes (id, code_organisme, nom_organisme, adresse_organisme, telephone_organisme, email_organisme, secteur_activite, createdAt, updatedAt) VALUES (${organismeValues.join(
-      ", "
-    )},NOW(),NOW())`;
-    const Result = await sequelize.query(Query);
+    // const organismeValues = [
+    //   "UUID()",
+    //   `"${organisme.code_organisme}"`,
+    //   `"${organisme.nom_organisme}"`,
+    //   `"${organisme.adresse_organisme}"`,
+    //   `"${organisme.telephone_organisme}"`,
+    //   `"${organisme.email_organisme}"`,
+    //   `"${organisme.secteur_activite}"`,
+    // ];
+    // const Query = `INSERT INTO organismes (id, code_organisme, nom_organisme, adresse_organisme, telephone_organisme, email_organisme, secteur_activite, createdAt, updatedAt) VALUES (${organismeValues.join(
+    //   ", "
+    // )},NOW(),NOW())`;
+    // const Result = await sequelize.query(Query);
 
     res.json({
       success: true,

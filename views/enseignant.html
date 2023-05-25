@@ -90,7 +90,7 @@
                   </a>
                     <button
                       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
-                     onclick="deleteEnseignant('${e.id}')"
+                     onclick="deleteEnseignant('${e.user.id}')"
                     >
                       Supprimer
                     </button>
@@ -299,11 +299,14 @@
       });
 
       function deleteEnseignant (id)  {
-        axios.delete("http://localhost:3000/admin/deleteetudient/"+id).then((res) => {
-          console.log(res);
+        console.log(id);
+        axios.delete("http://localhost:3000/admin/deleteenseignant/"+id).then((res) => {
           if (res.data.success) {
-            window.location.reload();
-          }
+          
+          window.location.reload();
+        
+      }
+      
         });
       };
     </script>

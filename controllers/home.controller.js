@@ -128,6 +128,8 @@
 const db = require("../models");
 const User = db.user;
 const Etudiant = db.etudiant;
+const Enseignant = db.enseignant;
+const Tuteur = db.tuteur
 exports.home = async (req, res) => {
   res.render("home", {
     locals: {
@@ -151,9 +153,19 @@ exports.dashboard = async (req, res) => {
       // let username;
 
       if (user.dataValues.role == "admin") {
-        user.dataValues.username = "admin"
-      } else {
-        user = await Etudiant.findOne({ 
+        user.dataValues.username = "admin";
+      }
+      if (user.dataValues.role == "enseignant") {
+        user = await Enseignant.findOne({
+          where: {
+            userId: user.dataValues.id,
+          },
+        });
+        user.dataValues.role = await req.user.dataValues.role;
+        user.dataValues.username = user.dataValues.nom;
+      } 
+      if (user.dataValues.role == "etudiant") {
+        user = await Etudiant.findOne({
           where: {
             userId: user.dataValues.id,
           },
@@ -161,6 +173,16 @@ exports.dashboard = async (req, res) => {
         user.dataValues.role = await req.user.dataValues.role;
         user.dataValues.username = user.dataValues.nom;
       }
+      if (user.dataValues.role == "tuteur") {
+        user = await Tuteur.findOne({
+          where: {
+            userId: user.dataValues.id,
+          },
+        });
+        user.dataValues.role = await req.user.dataValues.role;
+        user.dataValues.username = user.dataValues.nom;
+      }
+
       res.render("dashboard", {
         locals: {
           title: "ES6 ",
@@ -177,5 +199,7 @@ exports.dashboard = async (req, res) => {
         })
         .end();
     }
-  } catch (error) {}
+  } catch (error) {
+    console.log("error dashboard", error);
+  }
 };
