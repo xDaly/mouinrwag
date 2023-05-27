@@ -125,10 +125,13 @@ exports.taches = async (req, res) => {
     },
   });
 
+
+  console.log(docs);
   res.render("stage_tasks_resp", {
     locals: {
       docs: docs,
       tasks: tasks,
+      stageId : req.params.id
     },
   });
 };
@@ -201,6 +204,18 @@ exports.update = async (req, res) => {
     });
   }
 };
+
+
+
+
+
+
+
+
+
+
+
+
 
 exports.updateUser = async (req, res) => {
   const { id } = req.params;

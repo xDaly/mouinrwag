@@ -161,7 +161,7 @@
         name: document.getElementById("name").value,
         desc: document.getElementById("desc").value,
         etat: "en attente",
-        stageId: "${docs?.stageId}",
+        stageId: "${stageId}",
       };
       await axios
         .post("http://localhost:3000/stage/addTask", data)
