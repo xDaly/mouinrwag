@@ -1,72 +1,188 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Task Management</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-    }
-    
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    
-    th, td {
-      padding: 8px;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
-    }
-    
-    th {
-      background-color: #f2f2f2;
-    }
-    
-    button {
-      padding: 6px 12px;
-      border: none;
-      background-color: #4CAF50;
-      color: white;
-      cursor: pointer;
-    }
-    
-    button:hover {
-      background-color: #45a049;
-    }
-  </style>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <head>
+    <title>Page with Navigation and Table</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+    integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I"
+    crossorigin="anonymous"
+  />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"
+      integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+
+      nav {
+        background-color: #f2f2f2;
+        padding: 10px;
+      }
+
+      .container {
+        margin: 20px;
+      }
+
+      .input-group {
+        margin-bottom: 10px;
+      }
+
+      .input-group input {
+        width: 200px;
+        padding: 5px;
+      }
+
+      .input-group button {
+        padding: 5px 10px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      table th,
+      table td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+    </style>
+  </head>
+  <body style="max-width: unset !important">
+    <nav>
+      <a href="#" onclick="history.back();">Retour</a>
+    </nav>
+    <div style="display: flex; justify-content: center">
+      <a
+      style="margin: 20px; padding: 20px; "
+        href="${docs?.rapport_path}"
+        class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+      >
+        <svg
+          class="fill-current w-4 h-4 mr-2"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+        >
+          <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+        </svg>
+        <span>telecharger le rapport</span>
+      </a>
+
+      <a
+      style="margin: 20px; padding: 20px; "
+
+        href="${docs?.journal_path}"
+        class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+      >
+        <svg
+          class="fill-current w-4 h-4 mr-2"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+        >
+          <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+        </svg>
+        <span>telecharger la journal de stage</span>
+      </a>
+
+      <a
+      style="margin: 20px; padding: 20px; "
+
+        href="${docs?.cdc_path}"
+        class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+      >
+        <svg
+          class="fill-current w-4 h-4 mr-2"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+        >
+          <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+        </svg>
+        <span>telecharger la cahier des charges</span>
+      </a>
+    </div>
+
+    <div class="container">
+      <div class="input-group">
+        <input
+        style="border: 1px solid gray" id="name" type="text" placeholder="titre de tache" />
+      </div>
+      <div class="input-group">
+        <input
+        style="border: 1px solid gray;width: 100%; height: 200px"
+          id="desc"
+          type="text"
+          placeholder="description"
+        />
+      </div>
+      <div class="input-group">
+        <button id="addtask" type="button">Ajouter Tache</button>
+      </div>
+      <table>
+        <tr>
+          <th>titre</th>
+          <th>description</th>
+          <th style="width: 100px">etat</th>
+          <th style="width: 100px"></th>
+        </tr>
+        ${tasks.map((e)=>{ return `
+        <tr>
+          <td>${e?.name}</td>
+          <td>${e?.desc}</td>
+          <td>${e?.etat}</td>
+          <td>
+            <button style="border:1px solid green;padding : 10px;color:white;background:green" onclick="update('${e?.id}','Valider')">Valider</button>
+
+          </td>
+        </tr>
+        ` }) }
+      </table>
+    </div>
+  </body>
   <script>
-    // JavaScript functions here...
+    const addtask = document.getElementById("addtask");
+    addtask.addEventListener("click", async (e) => {
+      e.preventDefault();
+      const data = {
+        name: document.getElementById("name").value,
+        desc: document.getElementById("desc").value,
+        etat: "en attente",
+        stageId: "${docs?.stageId}",
+      };
+      await axios
+        .post("http://localhost:3000/stage/addTask", data)
+        .then((data) => {
+          if (data.data.success) {
+            window.location.reload();
+          }
+        });
+    });
+
+
+    const update = (id, etat) => {
+    axios.post("/stage/update", {
+      id: id,
+      etat: etat,
+    }).then((data)=>{
+      if (data.data.success) {
+        window.location.reload()
+      }
+    })
+  };
   </script>
-</head>
-<body>
-  <table>
-    <thead>
-      <tr>
-        <th>Task Name</th>
-        <th>Task Description</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Task 1</td>
-        <td>Task 1 description</td>
-        <td>
-          <button onclick="markInProgress(1)">In Progress</button>
-          <button onclick="markDone(1)">Done</button>
-        </td>
-      </tr>
-      <tr>
-        <td>Task 2</td>
-        <td>Task 2 description</td>
-        <td>
-          <button onclick="markInProgress(2)">In Progress</button>
-          <button onclick="markDone(2)">Done</button>
-        </td>
-      </tr>
-      <!-- Add more task rows as needed -->
-    </tbody>
-  </table>
-</body>
 </html>
+

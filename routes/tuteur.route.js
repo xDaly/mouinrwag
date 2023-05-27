@@ -1,7 +1,7 @@
 const router = require("express").Router();
-const respstage = require("../controllers/respstage.controller.js");
+const tuteur = require("../controllers/tuteur.controller.js");
 
-router.get("/loginrespstage", respstage.loginrespstage);
+router.get("/listedesstage", tuteur.stages);
 // router.post("/addorganisme", organisme.createOrganisme);
 // router.get("/dashboardorganisme", organisme.dashboard); 
 // router.get("/demandestageorganisme", organisme.demandestageorganisme);

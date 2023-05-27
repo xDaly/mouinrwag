@@ -3,6 +3,7 @@ const Stage = db.stage;
 const DemandeStage = db.demandestage;
 const Organisme = db.organisme;
 const User = db.user;
+const Tuteur = db.tuteur;
 const Etudiant = db.etudiant;
 const Op = db.Sequelize.Op;
 
@@ -42,41 +43,41 @@ exports.createOrganisme = async (req, res) => {
   }
 };
 
-exports.dashboard = async (req, res) => {
-  if (await req.isAuthenticated()) {
-    const user = await req.user;
-
-    const organisme = await Organisme.findOne({
-      where: { userId: user.id },
-    });
-    const stages = await Stage.findAll({
-      where: { organismeId: organisme.id },
-    });
-
-
-
-    res.render("dashboardorganisme", { locals: { organisme, stages: stages } });
-  } else {
-    res.redirect("/organisme/loginOrganisme");
-  }
-};
-
 exports.stages = async (req, res) => {
   if (await req.isAuthenticated()) {
     const user = await req.user;
-    const organisme = await Organisme.findOne({
-      where: { userId: user.id },
+    const tuteur = await Tuteur.findOne({
+      where: {
+        userId: user.id,
+      },
     });
+
     const stages = await Stage.findAll({
-      where: { organismeId: organisme.id },
+      where: { organismeId: tuteur.organismeId },
     });
-    res.render("listestageorganisme", {
-      locals: { organisme, stages: stages },
-    });
+
+    res.render("tuteurliststage", { locals: {  stages: stages } });
   } else {
-    res.redirect("/organisme/loginOrganisme");
+    res.redirect("/auth/loginPage");
   }
 };
+
+// exports.stages = async (req, res) => {
+//   if (await req.isAuthenticated()) {
+//     const user = await req.user;
+//     const organisme = await Organisme.findOne({
+//       where: { userId: user.id },
+//     });
+//     const stages = await Stage.findAll({
+//       where: { organismeId: organisme.id },
+//     });
+//     res.render("listestageorganisme", {
+//       locals: { organisme, stages: stages },
+//     });
+//   } else {
+//     res.redirect("/organisme/loginOrganisme");
+//   }
+// };
 
 exports.addstage = async (req, res) => {
   const stage = {
@@ -130,7 +131,7 @@ exports.demandestageorganisme = async (req, res) => {
         {
           model: db.stage,
           as: "stage",
-          where: { organismeId: organisme.dataValues.id},
+          where: { organismeId: organisme.dataValues.id },
         },
         {
           model: db.etudiant,
@@ -195,23 +196,23 @@ exports.demandeStage = async (req, res) => {
 exports.updatestage = async (req, res) => {
   const { id } = req.body;
   const { etat } = req.body;
-try {
+  try {
     await DemandeStage.update(
-    { etat: etat },
-    {
-      where: {
-        id: id,
-      },
-    }
-  );
-  res.status(200).json({
-    success: true,
-  });
-} catch (error) {
-  res.status(200).json({
-    success: false,
-  });
-}
+      { etat: etat },
+      {
+        where: {
+          id: id,
+        },
+      }
+    );
+    res.status(200).json({
+      success: true,
+    });
+  } catch (error) {
+    res.status(200).json({
+      success: false,
+    });
+  }
 };
 
 exports.updateUser = async (req, res) => {

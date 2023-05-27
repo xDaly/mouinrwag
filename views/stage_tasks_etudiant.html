@@ -1,72 +1,113 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Task Management</title>
+  <head>
+    <title>Task Management</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      th {
+        background-color: #f2f2f2;
+      }
+
+      button {
+        padding: 6px 12px;
+        border: none;
+        background-color: #4caf50;
+        color: white;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+      integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I"
+      crossorigin="anonymous"
+    />
+    <script>
+      // JavaScript functions here...
+    </script>
+  </head>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: "Lato", sans-serif;
     }
-    
-    table {
-      width: 100%;
-      border-collapse: collapse;
+
+    :root {
+      --primary: blue;
     }
-    
-    th, td {
-      padding: 8px;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
+
+    .justify {
+      text-align: justify;
     }
-    
-    th {
-      background-color: #f2f2f2;
+
+    .text-purple {
+      color: var(--primary);
     }
-    
-    button {
-      padding: 6px 12px;
-      border: none;
-      background-color: #4CAF50;
+
+    .bg-purple {
+      background-color: var(--primary);
       color: white;
-      cursor: pointer;
-    }
-    
-    button:hover {
-      background-color: #45a049;
     }
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <body>
+    <nav class="nav bg-purple justify-content-center">
+      <a class="nav-link text-white" href="/dashboard"
+        ><i class="fa fa-home" aria-hidden="true"></i> Home</a
+      >
+    </nav>
+    <table>
+      <thead>
+        <tr>
+          <th>Titre</th>
+          <th>Description</th>
+          <th style="width: 100px">Etat</th>
+          <th style="width: 200px"></th>
+        </tr>
+      </thead>
+      <tbody>
+        ${tasks.map((t)=> {return `
+        <tr>
+          <td>${t?.name}/td></td>
+          <td>${t?.desc}</td>
+          <td>${t?.etat}</td>
+          <td>
+            <button onclick="update('${t?.id}','en cours')">En cours</button>
+            <button onclick="update('${t?.id}','terminer')">Terminer</button>
+          </td>
+        </tr>
+        `}) }
+      </tbody>
+    </table>
+  </body>
   <script>
-    // JavaScript functions here...
+    const update = (id, etat) => {
+      axios.post("/stage/update", {
+        id: id,
+        etat: etat,
+      }).then((data)=>{
+        if (data.data.success) {
+          window.location.reload()
+        }
+      })
+    };
   </script>
-</head>
-<body>
-  <table>
-    <thead>
-      <tr>
-        <th>Task Name</th>
-        <th>Task Description</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Task 1</td>
-        <td>Task 1 description</td>
-        <td>
-          <button onclick="markInProgress(1)">In Progress</button>
-          <button onclick="markDone(1)">Done</button>
-        </td>
-      </tr>
-      <tr>
-        <td>Task 2</td>
-        <td>Task 2 description</td>
-        <td>
-          <button onclick="markInProgress(2)">In Progress</button>
-          <button onclick="markDone(2)">Done</button>
-        </td>
-      </tr>
-      <!-- Add more task rows as needed -->
-    </tbody>
-  </table>
-</body>
 </html>

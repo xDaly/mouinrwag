@@ -1,122 +1,128 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-  <title>Documents du stage</title>
-  <style>
-    body {
-      background-color: #007BFF;
-      font-family: Arial, sans-serif;
-      color: #FFF;
-    }
-    
-    h1 {
-      text-align: center;
-      margin-top: 50px;
-    }
-    
-    .info-section {
-      margin: 30px auto;
-      width: 600px;
-      padding: 20px;
-      background-color: #0069D9;
-      border-radius: 10px;
-    }
-    
-    .info-section h2 {
-      font-size: 20px;
-    }
-    
-    .upload-section {
-      margin: 30px auto;
-      width: 600px;
-      padding: 20px;
-      background-color: #0069D9;
-      border-radius: 10px;
-    }
-    
-    .upload-button {
-      background-color: #004AAD;
-      color: #FFF;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    
-    .upload-button:hover {
-      background-color: #00274C;
-    }
-    
+    <title>Documents du stage</title>
+    <style>
+      body {
+        background-color: #007bff;
+        font-family: Arial, sans-serif;
+        color: #fff;
+      }
 
-    
-    .file-label {
-      padding: 5px;
-    }
-    
-    .file-name {
-      font-size: 16px;
-      margin-top: 5px;
-    }
-  </style>
-</head>
-<body>
-  <h1>Documents du stage</h1>
-  
-  <div class="info-section">
-    <h2>Code Stage</h2>
-    <p>${stage.code_stage}</p>
+      h1 {
+        text-align: center;
+        margin-top: 50px;
+      }
 
-    <h2>Type</h2>
-    <p>${stage.type}</p>
+      .info-section {
+        margin: 30px auto;
+        width: 600px;
+        padding: 20px;
+        background-color: #0069d9;
+        border-radius: 10px;
+      }
 
-    <h2>Duree</h2>
-    <p>${stage.duree}</p>
+      .info-section h2 {
+        font-size: 20px;
+      }
 
-    <h2>Nom du organisme</h2>
-    <p>${stage.organisme.dataValues.nom_organisme}</p>
-  </div>
-  
+      .upload-section {
+        margin: 30px auto;
+        width: 600px;
+        padding: 20px;
+        background-color: #0069d9;
+        border-radius: 10px;
+      }
 
-  
-  <div class="upload-section">
-    <h2>Upload des documents </h2>
-    
-    <div>
-      <label for="file1" class="file-label">Journal du stage </label>
-      <input type="file" id="journal" class="file-input">
-      <span class="file-name"></span>
-      <button class="upload-button" id="uploadjournal">Upload</button>
+      .upload-button {
+        background-color: #004aad;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .upload-button:hover {
+        background-color: #00274c;
+      }
+
+      .file-label {
+        padding: 5px;
+      }
+
+      .file-name {
+        font-size: 16px;
+        margin-top: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Documents du stage</h1>
+
+    ${ stage != null ? `  <div class="info-section">
+      <h2>Code Stage</h2>
+      <p>${stage?.code_stage}</p>
+
+      <h2>Type</h2>
+      <p>${stage?.type}</p>
+
+      <h2>Duree</h2>
+      <p>${stage?.duree}</p>
+
+      <h2>Nom du organisme</h2>
+      <p>${stage?.organisme?.dataValues?.nom_organisme}</p>
     </div>
-    
-    <div>
-      <label for="file2" class="file-label">Cahier des charges </label>
-      <input type="file" id="cdc" class="file-input">
-      <span class="file-name"></span>
-      <button class="upload-button" id="uploadcdc">Upload</button>
-    </div>
-    
-    <div>
-      <label for="file3" class="file-label">Rapport de stage</label>
-      <input type="file" id="rapport" class="file-input">
-      <span class="file-name"></span>
-      <button class="upload-button" id="uploadrapport">Upload</button>
-    </div>
-  </div>
-  
-  <script>
+    ` : `
+    <p>pas de stage</p>
+    ` }
+
+    ${ stage != null ? `  <div class="upload-section">
+      <h2>Upload des documents</h2>
+
+      <div>
+        <label for="file1" class="file-label">Journal du stage </label>
+        <input type="file" id="journal" class="file-input" />
+        <span class="file-name"></span>
+        <button class="upload-button" id="uploadjournal">Upload</button>
+      </div>
+
+      <div>
+        <label for="file2" class="file-label">Cahier des charges </label>
+        <input type="file" id="cdc" class="file-input" />
+        <span class="file-name"></span>
+        <button class="upload-button" id="uploadcdc">Upload</button>
+      </div>
+
+      <div>
+        <label for="file3" class="file-label">Rapport de stage</label>
+        <input type="file" id="rapport" class="file-input" />
+        <span class="file-name"></span>
+        <button class="upload-button" id="uploadrapport">Upload</button>
+      </div>
+    </div>   ` : `
+    <p></p>
+    ` }
+
+    <script>
       const uploadjournal = document.getElementById("uploadjournal");
       uploadjournal.addEventListener("click", async (e) => {
         e.preventDefault();
         const formData = new FormData();
         const file1 = document.getElementById("journal").files[0];
         formData.append("journal", file1);
-        formData.append("stageId", "${stage.id}");
+        formData.append("stageId", "${stage?.id}");
         const url = "/stage/docs";
         try {
-          const response = await axios.post(url, formData,{headers:{"Content-Type": "multipart/form-data"}});
+          const response = await axios.post(url, formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+          });
           if (response.status == 200) {
             window.location.href = "http://localhost:3000/dashboard";
           } else {
@@ -127,7 +133,6 @@
           alert("An error occurred during upload!");
         }
       });
-
 
       const uploadrapport = document.getElementById("uploadrapport");
       uploadrapport.addEventListener("click", async (e) => {
@@ -135,10 +140,12 @@
         const formData = new FormData();
         const file1 = document.getElementById("rapport").files[0];
         formData.append("rapport", file1);
-        formData.append("stageId", "${stage.id}");
+        formData.append("stageId", "${stage?.id}");
         const url = "/stage/docs";
         try {
-          const response = await axios.post(url, formData,{headers:{"Content-Type": "multipart/form-data"}});
+          const response = await axios.post(url, formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+          });
           if (response.status == 200) {
             window.location.href = "http://localhost:3000/dashboard";
           } else {
@@ -149,7 +156,6 @@
           alert("An error occurred during upload!");
         }
       });
-
 
       const uploadcdc = document.getElementById("uploadcdc");
       uploadcdc.addEventListener("click", async (e) => {
@@ -157,10 +163,12 @@
         const formData = new FormData();
         const file1 = document.getElementById("cdc").files[0];
         formData.append("cdc", file1);
-        formData.append("stageId", "${stage.id}");
+        formData.append("stageId", "${stage?.id}");
         const url = "/stage/docs";
         try {
-          const response = await axios.post(url, formData,{headers:{"Content-Type": "multipart/form-data"}});
+          const response = await axios.post(url, formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+          });
           if (response.status == 200) {
             window.location.href = "http://localhost:3000/dashboard";
           } else {
@@ -171,6 +179,6 @@
           alert("An error occurred during upload!");
         }
       });
-  </script>
-</body>
+    </script>
+  </body>
 </html>
