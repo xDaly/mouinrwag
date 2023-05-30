@@ -256,8 +256,9 @@ app.get("/dashboard", requireAuthentication, (req, res) => {
   res.render("dashboard", { user: req.session.user });
 });
 
-db.sequelize.sync({ alter: true });
-createAdmin();
+db.sequelize.sync({ alter: true }).then(() => {
+  createAdmin();
+});
 // Start the server
 app.listen(3000, () => {
   console.log("Server started on http://localhost:3000");

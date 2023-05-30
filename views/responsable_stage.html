@@ -82,9 +82,6 @@ background-repeat: no-repeat;">
     <table class="w-full table-auto">
       <thead class="bg-gray-50">
         <tr>
-            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Cin
-              </th>
           <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
             Nom
           </th>
@@ -115,31 +112,28 @@ background-repeat: no-repeat;">
        ${responsables ? responsables.map((e) => { return `
         <tr>
           <td class="px-6 py-4 whitespace-nowrap">
-            <div class="text-sm text-gray-900">${e.cin} </div>
+            <div class="text-sm text-gray-900">${e?.nom}</div>
           </td>
           <td class="px-6 py-4 whitespace-nowrap">
-            <div class="text-sm text-gray-900">${e.nom}</div>
+            <div class="text-sm text-gray-900">${e?.prenom}</div>
           </td>
           <td class="px-6 py-4 whitespace-nowrap">
-            <div class="text-sm text-gray-900">${e.prenom}</div>
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap">
-            <div class="text-sm text-gray-900">${e.email}</div>
+            <div class="text-sm text-gray-900">${e?.email}</div>
           </td> 
           <td class="px-6 py-4 whitespace-nowrap">
-            <div class="text-sm text-gray-900">${e.telephone}</div>
+            <div class="text-sm text-gray-900">${e?.telephone}</div>
           </td> 
           <td class="px-6 py-4 whitespace-nowrap">
-            <div class="text-sm text-gray-900">${e.specialite}</div>
+            <div class="text-sm text-gray-900">${e?.specialite}</div>
           </td>
           <td class="px-6 py-4 whitespace-nowrap">
-            <div class="text-sm text-gray-900">${e.adresse}</div>
+            <div class="text-sm text-gray-900">${e?.adresse}</div>
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
             <a
                   class="bg-blue-300 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
                   type="button"
-                  href="/admin/editresponsable_stage/${e.id}"
+                  href="/admin/editresponsable_stage/${e?.id}"
                 >
                   Modifier
                 </a>

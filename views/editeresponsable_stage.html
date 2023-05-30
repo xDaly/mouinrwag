@@ -36,13 +36,7 @@
         <div class="mb-20">
           <h2 class="text-xl font-bold mb-12">Modifier responsable de stage</h2>
           <form class="flex flex-col md:flex-row md:items-center">
-            <input
-              class="border border-gray-400 py-2 rounded-md mb-2 md:mr-2 md:mb-0"
-              type="text"
-              id="cin"
-              value="${e.cin}"
-              placeholder="cin  "
-            />
+      
             <input
               class="border border-gray-400 p-2 rounded-md mb-2 md:mr-2 md:mb-0"
               type="text"
@@ -102,7 +96,6 @@
     editresponsable_stage.addEventListener("click", (event) => {
       event.preventDefault();
     const responsable_stage = {
-        cin: document.getElementById("cin").value,
         nom: document.getElementById("nom").value,
         prenom: document.getElementById("prenom").value,
         email: document.getElementById("email").value,

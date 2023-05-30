@@ -58,8 +58,6 @@ exports.addEtudiant = async (req, res) => {
       role: "etudiant",
     });
 
-    console.log(Etudiant);
-
     const newEtudiant = await Etudiant.create({
       nom: etudiant.nom,
       prenom: etudiant.prenom,
@@ -212,23 +210,7 @@ exports.enseignant = async (req, res) => {
 
 exports.addEnseignant = async (req, res) => {
   try {
-    // console.log(enseignant);
-    // const enseignantValues = [
-    //   "UUID()",
-    //   `"${enseignant.cin}"`,
-    //   `"${enseignant.nom}"`,
-    //   `"${enseignant.prenom}"`,
-    //   `"${enseignant.email}"`,
-    //   `"${enseignant.mot_de_passe}"`,
-    //   `"${enseignant.telephone}"`,
-    //   `"${enseignant.addresse}"`,
-    //   `"${enseignant.specialite}"`,
-    //   `"${enseignant.role}"`,
-    // ];
-    // const enseignantQuery = `INSERT INTO users (id, cin, nom, prenom, email, mot_de_passe, telephone, addresse, specialite, role, createdAt, updatedAt) VALUES (${enseignantValues.join(
-    //   ", "
-    // )},NOW(),NOW())`;
-    // const enseignantResult = await sequelize.query(enseignantQuery);
+
 
     const newEnseignantLoginData = await User.create({
       cin: req.body.cin,
@@ -376,7 +358,6 @@ exports.organisme = async (req, res) => {
 };
 
 exports.addOrganisme = async (req, res) => {
-  console.log(req.body);
   try {
     const organisme = {
       code_organisme: req.body.code_organisme,
@@ -420,8 +401,11 @@ exports.addOrganisme = async (req, res) => {
     res.json({
       success: true,
     });
+
+
+    res.status(200).json({ success: true });
   } catch (error) {
-    res.json({ error });
+    res.status(500).json({ success: false });
   }
 };
 
@@ -436,7 +420,6 @@ exports.getEditOrganisme = async (req, res) => {
 exports.editOrganisme = async (req, res) => {
   try {
     const update = {
-      code_organisme: req.body.code_organisme,
       nom_organisme: req.body.nom_organisme,
       adresse_organisme: req.body.adresse_organisme,
       telephone_organisme: req.body.telephone_organisme,
@@ -445,7 +428,7 @@ exports.editOrganisme = async (req, res) => {
     };
     // update etudiant to database using raw query
     const updated = await sequelize.query(
-      `UPDATE organismes SET code_organisme = "${update.code_organisme}", nom_organisme = "${update.nom_organisme}", adresse_organisme = "${update.adresse_organisme}", telephone_organisme = "${update.telephone_organisme}", email_organisme = "${update.email_organisme}", secteur_activite = "${update.secteur_activite}" WHERE id = "${req.params.id}"`,
+      `UPDATE organismes SET  nom_organisme = "${update.nom_organisme}", adresse_organisme = "${update.adresse_organisme}", telephone_organisme = "${update.telephone_organisme}", email_organisme = "${update.email_organisme}", secteur_activite = "${update.secteur_activite}" WHERE id = "${req.params.id}"`,
       { type: QueryTypes.UPDATE }
     );
     res.json({
@@ -701,22 +684,22 @@ exports.addResponsable_stage = async (req, res) => {
       specialite: req.body.specialite,
       adresse: req.body.adresse,
     };
-    console.log(responsable_stage);
-    const responsable_stageeValues = [
-      "UUID()",
-      `"${responsable_stage.cin}"`,
-      `"${responsable_stage.nom}"`,
-      `"${responsable_stage.prenom}"`,
-      `"${responsable_stage.email}"`,
-      `"${responsable_stage.telephone}"`,
-      `"${responsable_stage.specialite}"`,
-      `"${responsable_stage.adresse}"`,
-    ];
-    const Query = `INSERT INTO responsablesstages (id, cin, nom, prenom, email, telephone	, specialite, adresse, createdAt, updatedAt) VALUES (${responsable_stageeValues.join(
-      ", "
-    )}, NOW(), NOW())`;
-
-    const Result = await sequelize.query(Query);
+    const resp = await User.create({
+      cin: req.body.cin,
+      email: req.body.email,
+      mot_de_passe: req.body.cin,
+      role: "responsablestage",
+    });
+    await ResponsableStage.create({
+      cin: req.body.cin,
+      nom: req.body.nom,
+      prenom: req.body.prenom,
+      email: req.body.email,
+      telephone: req.body.telephone,
+      specialite: req.body.specialite,
+      adresse: req.body.adresse,
+      userId: resp.dataValues.id,
+    });
 
     res.json({
       success: true,
@@ -750,7 +733,7 @@ exports.editResponsable_stage = async (req, res) => {
     console.log(update);
     // update responsable de stage to database using raw query
     const updated = await sequelize.query(
-      `UPDATE responsablesstages SET cin = "${update.cin}", nom = "${update.nom}",prenom = "${update.prenom}",
+      `UPDATE responsablesstages SET  nom = "${update.nom}",prenom = "${update.prenom}",
       email = "${update.email}",telephone	 = "${update.telephone}",specialite = "${update.specialite}",
       adresse = "${update.adresse}" WHERE id = "${req.params.id}"`,
       { type: QueryTypes.UPDATE }
@@ -765,10 +748,17 @@ exports.editResponsable_stage = async (req, res) => {
 
 exports.deleteResponsable_stage = async (req, res) => {
   try {
+    const resp = await ResponsableStage.findByPk(req.params.id);
+    await User.destroy({
+      where: {
+        id: resp.dataValues.userId,
+      },
+    });
     const deleted = await sequelize.query(
       `DELETE FROM responsablesstages WHERE id = "${req.params.id}"`,
       { type: QueryTypes.DELETE }
     );
+
     res.json({ success: true });
   } catch (error) {
     res.json({ error });

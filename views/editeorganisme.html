@@ -40,44 +40,37 @@
           <input
             class="border border-gray-400 p-2 rounded-md mb-2 md:mr-2 md:mb-0"
             type="text"
-            id="code_organisme"
-            value="${e.code_organisme}"
-            placeholder="Code de l'organisme"
-          />
-          <input
-            class="border border-gray-400 p-2 rounded-md mb-2 md:mr-2 md:mb-0"
-            type="text"
             id="nom_organisme"
             placeholder="Nom de l'organisme"
-            value="${e.nom_organisme}"
+            value="${e?.nom_organisme}"
           />
           <input
             class="border border-gray-400 p-2 rounded-md mb-2 md:mr-2 md:mb-0"
             type="text"
             id="adresse_organisme"
             placeholder="Adresse de l'organisme"
-            value="${e.adresse_organisme}"
+            value="${e?.adresse_organisme}"
           />
           <input
             class="border border-gray-400 p-2 rounded-md mb-2 md:mr-2 md:mb-0"
             type="text"
             id="telephone_organisme"
             placeholder="Téléphone de l'organisme"
-            value="${e.telephone_organisme}"
+            value="${e?.telephone_organisme}"
           />
           <input
             class="border border-gray-400 p-2 rounded-md mb-2 md:mr-2 md:mb-0"
             type="text"
             id="email_organisme"
             placeholder="Email de l'organisme"
-            value="${e.email_organisme}"
+            value="${e?.email_organisme}"
           />
           <input
             class="border border-gray-400 p-2 rounded-md mb-2 md:mr-2 md:mb-0"
             type="text"
             id="secteur_activite"
             placeholder="Secteur d'activite"
-            value="${e.secteur_activite}"
+            value="${e?.secteur_activite}"
           />
         </form>
       </div>
@@ -96,7 +89,6 @@
     const editOrganisme = document.getElementById("editOrganisme");
     editOrganisme.addEventListener("click", (e) => {
       const organisme = {
-        code_organisme: document.getElementById("code_organisme").value,
         nom_organisme: document.getElementById("nom_organisme").value,
         adresse_organisme: document.getElementById("adresse_organisme").value,
         telephone_organisme: document.getElementById("telephone_organisme").value,

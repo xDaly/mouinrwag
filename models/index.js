@@ -49,7 +49,7 @@ db.tuteur.belongsTo(db.user, { as: "user" });
 db.tuteur.belongsTo(db.organisme, { as: "organisme" });
 db.stage.belongsTo(db.organisme, { as: "organisme" });
 db.stage.hasMany(db.task, { as: "tasks" });
-
+db.responsablesstage.belongsTo(db.user, { as: "user"  });
 // db.user.hasOne(db.enseignant, { as: "enseignant" });
 
 db.etudiant.belongsTo(db.departement, {
@@ -60,6 +60,8 @@ db.departement.hasMany(db.etudiant, {
   as: "etudiant",
   optional: true,
 });
+
+
 // db.etudiant.belongsTo(db.departement, { as: "etudiant",  });
 
 db.enseignant.belongsTo(db.departement, {
