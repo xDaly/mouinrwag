@@ -28,10 +28,7 @@
       background-repeat: no-repeat;
     "
   >
-    <script>
-      
-    
-    </script>
+    <script></script>
     <section
       class="bg-white max-w-lg mx-auto p-8 md:p-12 my-10 rounded-lg shadow-lg"
     >
@@ -100,9 +97,9 @@
               </button>
             </div>
           </form>
- 
+
           ` : ``} ${selected === "tuteur" ? `
-          <form  id="signupFormTuteur"  class="mx-auto">
+          <form id="signupFormTuteur" class="mx-auto">
             <div class="w-full flex mx-6 my-2">
               <input
                 class="mx-6 border-b-2 border-gray-300 outline-none shadow-sm"
@@ -145,29 +142,41 @@
               </select>
             </div>
             ` : ``}
-          
           </form>
           <div class="flex justify-center">
             <button
               id="signuptuteurBTN"
               class="w-40 bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline"
- 
             >
               S'inscrire
             </button>
           </div>
-          ` : ``} ${selected === "responsable" ? `
-          <form action="" id="signupFormResponsable" m class="mx-auto">
+          ` : ``} ${selected === "respossableorganisme" ? `
+          <form action="" id="signuprespossableorganisme" m class="mx-auto">
             <div class="w-full flex mx-6 my-2">
               <input
                 class="mx-6 border-b-2 border-gray-300 outline-none shadow-sm"
-                id="nom"
+                id="nomro"
                 type="text"
-                placeholder="Nom et Prenom"
+                placeholder="Nom"
+              />
+              <input
+                class="mx-6 border-b-2 border-gray-300 outline-none shadow-sm"
+                id="prenomro"
+                placeholder="prenom"
+              />
+            </div>
+
+            <div class="flex mx-6 my-2">
+              <input
+                class="mx-6 border-b-2 order-gray-300 outline-none shadow-sm"
+                id="code_responsable"
+                type="text"
+                placeholder="code responsable"
               />
               <input
                 class="mx-6 border-b-2 order-gray-300 outline-none shadow-sm"
-                id="email"
+                id="emailro"
                 type="text"
                 placeholder="E-mail..."
               />
@@ -175,56 +184,28 @@
             <div class="flex mx-6 my-2">
               <input
                 class="mx-6 my-4 border-b-2 order-gray-300 outline-none shadow-sm"
-                id="num"
+                id="numro"
                 type="text"
                 placeholder="votre Num "
               />
               <input
                 class="mx-6 my-4 border-b-2 order-gray-300 outline-none shadow-sm"
-                id="adresse"
+                id="fonctionro"
                 type="text"
-                placeholder="Adresse"
+                placeholder="Fonction "
               />
             </div>
 
-            <div class="flex mx-6 my-2">
-              <input
-                class="mx-6 my-4 border-b-2 order-gray-300 outline-none shadow-sm"
-                id="fonctionnalite"
-                type="text"
-                placeholder="Fonctionnalité "
-              />
-              <input
-                class="mx-6 my-4 border-b-2 order-gray-300 outline-none shadow-sm"
-                id="secteur"
-                type="text"
-                placeholder="Secteur d'activité"
-              />
-            </div>
-            <div class="flex mx-6 my-2">
-              <input
-                class="mx-6 my-4 border-b-2 order-gray-300 outline-none shadow-sm"
-                id="motpasse"
-                type="text"
-                placeholder="Mot de passe"
-              />
-              <input
-                class="mx-6 my-4 border-b-2 order-gray-300 outline-none shadow-sm"
-                id="confirmer"
-                type="text"
-                placeholder="confirmer ..."
-              />
-            </div>
             ${selected !== "organisme" ? `
 
             <div class="flex mx-6 my-2">
               <label
                 for="type"
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >Selecter votre type</label
+                >Selecter votre organisme</label
               >
               <select
-               
+              onchange="selectOrganisme(event)"
                 id="type"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               >
@@ -237,9 +218,9 @@
             <div class="flex justify-center">
               <button
                 class="w-40 bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline"
-                type="submit"
+                id="signuprespossableorganismeBTN"
               >
-                S'inscrire
+                S'inscrirezzz
               </button>
             </div>
           </form>
@@ -250,14 +231,13 @@
   </body>
 
   <script>
-  let organismeId = "${organismes[0].id}";
-      const selectOrganisme = (event)=> {
-        organismeId = event.target.value
-      }
+    let organismeId = "${organismes[0].id}";
+    const selectOrganisme = (event) => {
+      organismeId = event.target.value;
+    };
 
-const signuptuteur = document.getElementById("signuptuteurBTN");
-    console.log(signuptuteur);
-    signuptuteur.addEventListener("click", async (e) => {
+    const signuptuteur = document.getElementById("signuptuteurBTN");
+    signuptuteur ? signuptuteur.addEventListener("click", async (e) => {
       e.preventDefault();
       let bodyData = {
         nom: document.getElementById("nom").value,
@@ -271,20 +251,32 @@ const signuptuteur = document.getElementById("signuptuteurBTN");
         if (res.data.success) {
           // window.location.href = "/login";
         }
-      })
+      });
+    })
+    : 
+    null
+
+    const signuprespossableorganisme = document.getElementById(
+      "signuprespossableorganismeBTN"
+    );
+    console.log(signuprespossableorganisme);
+    signuprespossableorganisme.addEventListener("click", async (e) => {
+      e.preventDefault();
+      let bodyData = {
+        nom: document.getElementById("nomro").value,
+        prenom: document.getElementById("prenomro").value,
+        email: document.getElementById("emailro").value,
+        organismeId: organismeId,
+        code_responsable: document.getElementById("code_responsable").value,
+        fonction: document.getElementById("fonctionro").value,
+      };
+      console.log(bodyData);
+      await axios.post("/organisme/addresp", bodyData).then((res) => {
+        console.log(res);
+        if (res.data.success) {
+          // window.location.href = "/login";
+        }
+      });
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
   </script>
 </html>

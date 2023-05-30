@@ -11,4 +11,6 @@ router.post("/addstage", organisme.addstage);
 router.put("/updatestage", organisme.updatestage);
 
 
+
+router.post("/addresp" ,organisme.addResponsableOrganisme)
 module.exports = router;

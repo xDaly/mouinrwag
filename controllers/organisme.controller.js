@@ -4,6 +4,7 @@ const DemandeStage = db.demandestage;
 const Organisme = db.organisme;
 const User = db.user;
 const Etudiant = db.etudiant;
+const RespOrganisme = db.responsableorganisme;
 const Op = db.Sequelize.Op;
 
 exports.loginOrganismePage = async (req, res) => {
@@ -52,8 +53,6 @@ exports.dashboard = async (req, res) => {
     const stages = await Stage.findAll({
       where: { organismeId: organisme.id },
     });
-
-
 
     res.render("dashboardorganisme", { locals: { organisme, stages: stages } });
   } else {
@@ -130,7 +129,7 @@ exports.demandestageorganisme = async (req, res) => {
         {
           model: db.stage,
           as: "stage",
-          where: { organismeId: organisme.dataValues.id},
+          where: { organismeId: organisme.dataValues.id },
         },
         {
           model: db.etudiant,
@@ -195,233 +194,49 @@ exports.demandeStage = async (req, res) => {
 exports.updatestage = async (req, res) => {
   const { id } = req.body;
   const { etat } = req.body;
-try {
+  try {
     await DemandeStage.update(
-    { etat: etat },
-    {
-      where: {
-        id: id,
-      },
-    }
-  );
-  res.status(200).json({
-    success: true,
-  });
-} catch (error) {
-  res.status(200).json({
-    success: false,
-  });
-}
-};
-
-exports.updateUser = async (req, res) => {
-  const { id } = req.params;
-  const { email, password, image, address, phone, firstname, lastname } =
-    req.body;
-  const user = await User.findByPk(id);
-  if (!user) {
-    return res.status(404).send({
-      message: "User not found with id " + id,
-    });
-  }
-  if (email) {
-    user.email = email;
-  }
-  if (password) {
-    user.password = crypt.encrypt(password);
-  }
-  if (image) {
-    user.image = image;
-  }
-  if (address) {
-    user.address = address;
-  }
-  if (phone) {
-    user.phone = phone;
-  }
-  if (firstname) {
-    user.firstname = firstname;
-  }
-  if (lastname) {
-    user.lastname = lastname;
-  }
-  await user.save();
-  res.status(200).json({
-    success: true,
-    message: "User updated successfully!",
-  });
-};
-
-exports.deleteUser = async (req, res) => {
-  const { id } = req.params;
-  try {
-    const user = await User.findByPk(id);
-    if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: "User not found with id " + id,
-      });
-    }
-    if (user) {
-      user.status = "Deleted";
-      await user.save();
-      res.status(200).json({
-        success: true,
-        message: "User Deleted successfully!",
-      });
-    }
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error,
-    });
-  }
-};
-
-exports.getUser = async (req, res) => {
-  const { id } = req.params;
-  const user = await User.findByPk(id, {
-    attributes: {
-      exclude: ["password"],
-    },
-  });
-  if (!user) {
-    return res.status(404).send({
-      success: false,
-      message: "User not found with id " + id,
-    });
-  }
-  res.status(200).json({
-    success: true,
-    user,
-  });
-};
-
-exports.getAllUser = async (req, res) => {
-  try {
-    const users = await User.findAll({
-      attributes: {
-        exclude: ["password"],
-      },
-    });
+      { etat: etat },
+      {
+        where: {
+          id: id,
+        },
+      }
+    );
     res.status(200).json({
       success: true,
-      users,
     });
   } catch (error) {
-    res.status(500).json({
+    res.status(200).json({
       success: false,
-      message: error.message,
     });
   }
 };
 
-exports.verifyUser = async (req, res) => {
-  const { id } = req.params;
-  try {
-    const user = await User.findByPk(id);
-    if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: "User not found with id " + id,
-      });
-    }
-    if (user.verified !== "Verified") {
-      user.verified = "Verified";
-      await user.save();
-      res.status(200).json({
-        success: true,
-        message: "User verified successfully!",
-      });
-    }
-    if (user.verified == "Verified") {
-      res.status(200).json({
-        success: true,
-        message: "User Already verified !",
-      });
-    }
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error,
-    });
-  }
-};
+// resp organisme
 
-exports.banUser = async (req, res) => {
-  const { id } = req.params;
+exports.addResponsableOrganisme = async (req, res) => {
   try {
-    const user = await User.findByPk(id);
-    if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: "User not found with id " + id,
-      });
-    }
-    if (user) {
-      user.status = "Banned";
-      await user.save();
-      res.status(200).json({
-        success: true,
-        message: "User Banned successfully!",
-      });
-    }
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error,
-    });
-  }
-};
+    
 
-exports.activateUser = async (req, res) => {
-  const { id } = req.params;
-  try {
-    const user = await User.findByPk(id);
-    if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: "User not found with id " + id,
-      });
-    }
-    if (user) {
-      user.status = "Active";
-      await user.save();
-      res.status(200).json({
-        success: true,
-        message: "User Activated successfully!",
-      });
-    }
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error,
-    });
-  }
-};
+  const user = await User.create({
+    cin: req.body.code_responsable,
+    email: req.body.email,
+    mot_de_passe: req.body.code_responsable,
+    role : 'responsableorganisme'
+  });
+  const resp = await RespOrganisme.create({
+    ...req.body,
+    userId : user.dataValues.id
+  })
+  res.json({
+    success : true
+  })
+} catch (error) {
+  res.json({
+    success : false
+  })
 
-exports.suspendUser = async (req, res) => {
-  const { id } = req.params;
-  try {
-    const user = await User.findByPk(id);
-    if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: "User not found with id " + id,
-      });
-    }
-    if (user) {
-      user.status = "Suspended";
-      await user.save();
-      res.status(200).json({
-        success: true,
-        message: "User Suspended successfully!",
-      });
-    }
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error,
-    });
-  }
+}
+
 };

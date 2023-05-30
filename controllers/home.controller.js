@@ -1,10 +1,9 @@
-
-
 const db = require("../models");
 const User = db.user;
 const Etudiant = db.etudiant;
 const Enseignant = db.enseignant;
-const Tuteur = db.tuteur
+const RespOrganisme = db.responsableorganisme;
+const Tuteur = db.tuteur;
 exports.home = async (req, res) => {
   res.render("home", {
     locals: {
@@ -30,6 +29,15 @@ exports.dashboard = async (req, res) => {
       if (user.dataValues.role == "admin") {
         user.dataValues.username = "admin";
       }
+      if (user.dataValues.role == "responsableorganisme") {
+        user = await RespOrganisme.findOne({
+          where: {
+            userId: user.dataValues.id,
+          },
+        });
+        user.dataValues.role = await req.user.dataValues.role;
+        user.dataValues.username = user.dataValues.nom;
+      }
       if (user.dataValues.role == "enseignant") {
         user = await Enseignant.findOne({
           where: {
@@ -38,7 +46,7 @@ exports.dashboard = async (req, res) => {
         });
         user.dataValues.role = await req.user.dataValues.role;
         user.dataValues.username = user.dataValues.nom;
-      } 
+      }
       if (user.dataValues.role == "etudiant") {
         user = await Etudiant.findOne({
           where: {
