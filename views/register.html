@@ -249,7 +249,7 @@
       await axios.post("/auth/registertuteur", bodyData).then((res) => {
         console.log(res);
         if (res.data.success) {
-          // window.location.href = "/login";
+           window.location.href = "/auth/loginPage";
         }
       });
     })
@@ -270,11 +270,9 @@
         code_responsable: document.getElementById("code_responsable").value,
         fonction: document.getElementById("fonctionro").value,
       };
-      console.log(bodyData);
       await axios.post("/organisme/addresp", bodyData).then((res) => {
-        console.log(res);
         if (res.data.success) {
-          // window.location.href = "/login";
+           window.location.href = "/auth/loginPage";
         }
       });
     });
