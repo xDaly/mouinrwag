@@ -5,6 +5,7 @@ const Organisme = db.organisme;
 const User = db.user;
 const Tuteur = db.tuteur;
 const Etudiant = db.etudiant;
+const Enseignant = db.enseignant
 const Op = db.Sequelize.Op;
 
 exports.loginrespstage = async (req, res) => {
@@ -44,21 +45,45 @@ exports.createOrganisme = async (req, res) => {
 };
 
 exports.stages = async (req, res) => {
-  if (await req.isAuthenticated()) {
-    const user = await req.user;
-    const tuteur = await Tuteur.findOne({
-      where: {
-        userId: user.id,
-      },
-    });
+  try {
 
-    const stages = await Stage.findAll({
-      where: { organismeId: tuteur.organismeId },
-    });
 
-    res.render("tuteurliststage", { locals: {  stages: stages } });
-  } else {
-    res.redirect("/auth/loginPage");
+    if (await req.isAuthenticated()) {
+      const user = await req.user;
+      if (user.role == 'tuteur') {
+        const tuteur = await Tuteur.findOne({
+          where: {
+            userId: user.id,
+          },
+        });
+        const stages = await Stage.findAll({
+          where: { organismeId: tuteur.organismeId },
+        });
+        return res.render("tuteurliststage", { locals: { stages: stages } });
+      }
+
+      if (user.role == 'enseignant') {
+
+        const enseignant = await Enseignant.findOne({
+          where: {
+            userId: user.id,
+          },
+        });
+        const stages = await Stage.findAll({
+          where: { organismeId: enseignant.organismeId },
+        });
+        return res.render("tuteurliststage", { locals: { stages: stages } });
+      }
+      else {
+        return res.redirect("/dashboard");
+      }
+
+    } else {
+      return res.redirect("/auth/loginPage");
+    }
+  } catch (error) {
+    return res.redirect("/dashboard");
+
   }
 };
 
@@ -69,7 +94,7 @@ exports.respstages = async (req, res) => {
     const user = await req.user;
     const stages = await Stage.findAll();
 
-    res.render("respliststage", { locals: {  stages: stages } });
+    res.render("respliststage", { locals: { stages: stages } });
   } else {
     res.redirect("/auth/loginPage");
   }
