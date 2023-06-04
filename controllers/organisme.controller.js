@@ -46,34 +46,65 @@ exports.createOrganisme = async (req, res) => {
 exports.dashboard = async (req, res) => {
   if (await req.isAuthenticated()) {
     const user = await req.user;
+    if (user.dataValues.role == 'organisme') {
+      const organisme = await Organisme.findOne({
+        where: { userId: user.id },
+      });
+      const stages = await Stage.findAll({
+        where: { organismeId: organisme.id },
+      });
+      return res.render("dashboardorganisme", { locals: { organisme, stages: stages } });
+    }
+    if (user.dataValues.role == 'responsableorganisme') {
+      const resp = await RespOrganisme.findOne({
+        where: { userId: user.id },
+      });
+      const organisme = await Organisme.findOne({
+        where: { id: resp.dataValues.organismeId },
+      });
+      const stages = await Stage.findAll({
+        where: { organismeId: resp.dataValues.organismeId },
+      });
+      return res.render("dashboardorganisme", { locals: { organisme, stages: stages } });
+    }
 
-    const organisme = await Organisme.findOne({
-      where: { userId: user.id },
-    });
-    const stages = await Stage.findAll({
-      where: { organismeId: organisme.id },
-    });
-
-    res.render("dashboardorganisme", { locals: { organisme, stages: stages } });
   } else {
-    res.redirect("/organisme/loginOrganisme");
+    return res.redirect("/organisme/loginOrganisme");
   }
 };
 
 exports.stages = async (req, res) => {
   if (await req.isAuthenticated()) {
     const user = await req.user;
-    const organisme = await Organisme.findOne({
-      where: { userId: user.id },
-    });
-    const stages = await Stage.findAll({
-      where: { organismeId: organisme.id },
-    });
-    res.render("listestageorganisme", {
-      locals: { organisme, stages: stages },
-    });
+
+    if (user.dataValues.role == 'organisme') {
+      const organisme = await Organisme.findOne({
+        where: { userId: user.id },
+      });
+      const stages = await Stage.findAll({
+        where: { organismeId: organisme.id },
+      });
+      return res.render("listestageorganisme", {
+        locals: { organisme, stages: stages },
+      });
+    }
+    if (user.dataValues.role == 'responsableorganisme') {
+      const resp = await RespOrganisme.findOne({
+        where: { userId: user.id },
+      });
+      const organisme = await Organisme.findOne({
+        where: { id: resp.dataValues.organismeId },
+      });
+      const stages = await Stage.findAll({
+        where: { organismeId: resp.dataValues.organismeId },
+      });
+      return res.render("listestageorganisme", {
+        locals: { organisme, stages: stages },
+      });
+    }
+
   } else {
-    res.redirect("/organisme/loginOrganisme");
+    return res.redirect("/organisme/loginOrganisme");
   }
 };
 
@@ -120,23 +151,55 @@ exports.deletestage = async (req, res) => {
 exports.demandestageorganisme = async (req, res) => {
   if (await req.isAuthenticated()) {
     const user = await req.user;
-    const organisme = await Organisme.findOne({
-      where: { userId: user.dataValues.id },
-    });
 
-    const demandes = await DemandeStage.findAll({
-      include: [
-        {
-          model: db.stage,
-          as: "stage",
-          where: { organismeId: organisme.dataValues.id },
-        },
-        {
-          model: db.etudiant,
-          as: "etudiant",
-        },
-      ],
-    });
+    if (user.dataValues.role == 'organisme') {
+      const organisme = await Organisme.findOne({
+        where: { userId: user.dataValues.id },
+      });
+      const demandes = await DemandeStage.findAll({
+        include: [
+          {
+            model: db.stage,
+            as: "stage",
+            where: { organismeId: organisme.dataValues.id },
+          },
+          {
+            model: db.etudiant,
+            as: "etudiant",
+          },
+        ],
+      });
+      return res.render("demandestageorganisme", {
+        locals: { demandes: demandes },
+      });
+    }
+    if (user.dataValues.role == 'responsableorganisme') {
+      const resp = await RespOrganisme.findOne({
+        where: { userId: user.dataValues.id },
+      })
+      const organisme = await Organisme.findOne({
+        where: { id: resp.dataValues.organismeId },
+      });
+      const demandes = await DemandeStage.findAll({
+        include: [
+          {
+            model: db.stage,
+            as: "stage",
+            where: { organismeId: organisme.dataValues.id },
+          },
+          {
+            model: db.etudiant,
+            as: "etudiant",
+          },
+        ],
+      });
+      return res.render("demandestageorganisme", {
+        locals: { demandes: demandes },
+      });
+    }
+
+
+
     // const stages = await Stage.findAll(
     //   {
     //     include: [
@@ -159,9 +222,7 @@ exports.demandestageorganisme = async (req, res) => {
     // console.log(demandes[0]);
     // console.log(demandes[0].stage);
     // console.log(demandes[0].etudiant);
-    res.render("demandestageorganisme", {
-      locals: { demandes: demandes },
-    });
+
   } else {
     res.redirect("/organisme/loginOrganisme");
   }
@@ -217,26 +278,26 @@ exports.updatestage = async (req, res) => {
 
 exports.addResponsableOrganisme = async (req, res) => {
   try {
-    
 
-  const user = await User.create({
-    cin: req.body.code_responsable,
-    email: req.body.email,
-    mot_de_passe: req.body.code_responsable,
-    role : 'responsableorganisme'
-  });
-  const resp = await RespOrganisme.create({
-    ...req.body,
-    userId : user.dataValues.id
-  })
-  res.json({
-    success : true
-  })
-} catch (error) {
-  res.json({
-    success : false
-  })
 
-}
+    const user = await User.create({
+      cin: req.body.code_responsable,
+      email: req.body.email,
+      mot_de_passe: req.body.code_responsable,
+      role: 'responsableorganisme'
+    });
+    const resp = await RespOrganisme.create({
+      ...req.body,
+      userId: user.dataValues.id
+    })
+    res.json({
+      success: true
+    })
+  } catch (error) {
+    res.json({
+      success: false
+    })
+
+  }
 
 };
