@@ -39,6 +39,7 @@ db.demandestage = require("./demande_stage.model.js")(sequelize, Sequelize);
 db.docstage = require("./doc_stage.model.js")(sequelize, Sequelize);
 db.tuteur = require("./tuteur.model.js")(sequelize, Sequelize);
 db.task = require("./task.model.js")(sequelize, Sequelize);
+db.remarque = require("./remarque_stage.model.js")(sequelize, Sequelize);
 
 //relations
 // db.organisme.hasMany(db.stage, { as: "stages" });
@@ -52,6 +53,8 @@ db.stage.belongsTo(db.organisme, { as: "organisme" });
 db.responsableorganisme.belongsTo(db.organisme , {as : "organisme"})
 
 db.stage.hasMany(db.task, { as: "tasks" });
+db.stage.hasMany(db.remarque, { as: "remarque" });
+
 db.responsablesstage.belongsTo(db.user, { as: "user"  });
 db.responsableorganisme.belongsTo(db.user , {as : "user"})
 // db.user.hasOne(db.enseignant, { as: "enseignant" });

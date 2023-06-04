@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"
+      integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <style>
+      /* CSS for the table */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      /* CSS for the textarea and button */
+      .form-container {
+        margin-bottom: 20px;
+      }
+
+      .form-container textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        resize: vertical;
+      }
+
+      .form-container button {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      .form-container button:hover {
+        background-color: #45a049;
+      }
+
+      .dashboard-button {
+        text-align: left;
+        margin-bottom: 20px;
+      }
+
+      .dashboard-button a {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 4px;
+        text-decoration: none;
+      }
+
+      .dashboard-button a:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard-button">
+      <a href="/dashboard">Dashboard</a>
+    </div>
+
+    <div class="form-container">
+      <textarea
+        id="remarksTextarea"
+        placeholder="Ajouter remarque"
+      ></textarea>
+      <button id="addRemarksButton" onclick="addremarque()">
+        Ajouter remarque
+      </button>
+    </div>
+
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Remarque</th>
+          </tr>
+      ${rs.map((r)=>{ return ` <tr>
+        <td>${new Date(r.createdAt).toLocaleDateString()}</td>
+        <td>${r.remarque}</td>
+      </tr>
+      `}).join('')}
+    </table>
+  </body>
+  <script>
+    const addremarque = async () => {
+      const data = {
+        remarque: document.getElementById("remarksTextarea").value,
+        id: "${stageId}",
+      };
+      await axios.post("/stage/addremarque", data).then((res) => {
+        if (res.data.success) {
+          window.location.reload();
+        }
+      });
+    };
+  </script>
+</html>

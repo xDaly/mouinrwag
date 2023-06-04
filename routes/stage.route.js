@@ -9,5 +9,7 @@ router.get("/taches/:id", stage.taches);
 router.get("/tasksetudiant", stage.tasksetudiant);
 router.post("/addTask", stage.addTask);
 router.post("/update", stage.update);
+router.get("/remarque/:id", stage.remarque);
+router.post("/addremarque",stage.addremarque)
 
 module.exports = router;

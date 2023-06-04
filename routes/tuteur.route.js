@@ -2,7 +2,7 @@ const router = require("express").Router();
 const tuteur = require("../controllers/tuteur.controller.js");
 
 router.get("/listedesstage", tuteur.stages);
-// router.post("/addorganisme", organisme.createOrganisme);
+router.get("/respstages", tuteur.respstages);
 // router.get("/dashboardorganisme", organisme.dashboard); 
 // router.get("/demandestageorganisme", organisme.demandestageorganisme);
 // router.get("/stages", organisme.stages); 

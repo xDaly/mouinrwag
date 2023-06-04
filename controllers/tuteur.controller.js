@@ -62,6 +62,18 @@ exports.stages = async (req, res) => {
   }
 };
 
+
+
+exports.respstages = async (req, res) => {
+  if (await req.isAuthenticated()) {
+    const user = await req.user;
+    const stages = await Stage.findAll();
+
+    res.render("respliststage", { locals: {  stages: stages } });
+  } else {
+    res.redirect("/auth/loginPage");
+  }
+};
 // exports.stages = async (req, res) => {
 //   if (await req.isAuthenticated()) {
 //     const user = await req.user;

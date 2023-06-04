@@ -7,6 +7,7 @@ const Task = db.task;
 const User = db.user;
 const Etudiant = db.etudiant;
 const Docs = db.docstage;
+const Remarque = db.remarque
 
 const Op = db.Sequelize.Op;
 
@@ -125,13 +126,12 @@ exports.taches = async (req, res) => {
     },
   });
 
-
   console.log(docs);
   res.render("stage_tasks_resp", {
     locals: {
       docs: docs,
       tasks: tasks,
-      stageId : req.params.id
+      stageId: req.params.id,
     },
   });
 };
@@ -139,9 +139,11 @@ exports.taches = async (req, res) => {
 exports.tasksetudiant = async (req, res) => {
   if (await req.isAuthenticated()) {
     let stage;
+    let tasks = []
     const user = await req.user;
     const etudiant = await Etudiant.findOne({
       include: {
+        required: false,
         model: db.demandestage,
         as: "demandes",
         where: {
@@ -152,12 +154,15 @@ exports.tasksetudiant = async (req, res) => {
         userId: user.dataValues.id,
       },
     });
+    if (etudiant.demandes.length > 0) {
+      tasks = await Task.findAll({
+        where: {
+          stageId: etudiant?.dataValues?.demandes[0]?.dataValues?.stageId,
+        },
+      });
+    }
 
-    const tasks = await Task.findAll({
-      where: {
-        stageId: etudiant.dataValues.demandes[0].dataValues.stageId,
-      },
-    });
+
 
     res.render("stage_tasks_etudiant", {
       locals: { tasks: tasks },
@@ -195,8 +200,8 @@ exports.update = async (req, res) => {
       }
     );
     res.json({
-      success : true
-    })
+      success: true,
+    });
   } catch (error) {
     console.log(error);
     res.json({
@@ -205,226 +210,32 @@ exports.update = async (req, res) => {
   }
 };
 
+exports.remarque = async (req, res) => {
+  const rs = await Remarque.findAll({
+    stageId: req.params.id
+  })
+  res.render("remarque", {
+    locals: {
+      stageId: req.params.id,
+      rs: rs
+    }
+  })
+}
 
-
-
-
-
-
-
-
-
-
-
-
-exports.updateUser = async (req, res) => {
-  const { id } = req.params;
-  const { email, password, image, address, phone, firstname, lastname } =
-    req.body;
-  const user = await User.findByPk(id);
-  if (!user) {
-    return res.status(404).send({
-      message: "User not found with id " + id,
-    });
-  }
-  if (email) {
-    user.email = email;
-  }
-  if (password) {
-    user.password = crypt.encrypt(password);
-  }
-  if (image) {
-    user.image = image;
-  }
-  if (address) {
-    user.address = address;
-  }
-  if (phone) {
-    user.phone = phone;
-  }
-  if (firstname) {
-    user.firstname = firstname;
-  }
-  if (lastname) {
-    user.lastname = lastname;
-  }
-  await user.save();
-  res.status(200).json({
-    success: true,
-    message: "User updated successfully!",
-  });
-};
-
-exports.deleteUser = async (req, res) => {
-  const { id } = req.params;
+exports.addremarque = async (req, res) => {
   try {
-    const user = await User.findByPk(id);
-    if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: "User not found with id " + id,
-      });
-    }
-    if (user) {
-      user.status = "Deleted";
-      await user.save();
-      res.status(200).json({
-        success: true,
-        message: "User Deleted successfully!",
-      });
-    }
+    await Remarque.create({
+      remarque: req.body.remarque,
+      stageId: req.body.id
+    })
+    res.json({
+      success: true
+    })
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error,
-    });
+    res.json({
+      error: error,
+      success: true
+    })
   }
-};
 
-exports.getUser = async (req, res) => {
-  const { id } = req.params;
-  const user = await User.findByPk(id, {
-    attributes: {
-      exclude: ["password"],
-    },
-  });
-  if (!user) {
-    return res.status(404).send({
-      success: false,
-      message: "User not found with id " + id,
-    });
-  }
-  res.status(200).json({
-    success: true,
-    user,
-  });
-};
-
-exports.getAllUser = async (req, res) => {
-  try {
-    const users = await User.findAll({
-      attributes: {
-        exclude: ["password"],
-      },
-    });
-    res.status(200).json({
-      success: true,
-      users,
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
-};
-
-exports.verifyUser = async (req, res) => {
-  const { id } = req.params;
-  try {
-    const user = await User.findByPk(id);
-    if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: "User not found with id " + id,
-      });
-    }
-    if (user.verified !== "Verified") {
-      user.verified = "Verified";
-      await user.save();
-      res.status(200).json({
-        success: true,
-        message: "User verified successfully!",
-      });
-    }
-    if (user.verified == "Verified") {
-      res.status(200).json({
-        success: true,
-        message: "User Already verified !",
-      });
-    }
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error,
-    });
-  }
-};
-
-exports.banUser = async (req, res) => {
-  const { id } = req.params;
-  try {
-    const user = await User.findByPk(id);
-    if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: "User not found with id " + id,
-      });
-    }
-    if (user) {
-      user.status = "Banned";
-      await user.save();
-      res.status(200).json({
-        success: true,
-        message: "User Banned successfully!",
-      });
-    }
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error,
-    });
-  }
-};
-
-exports.activateUser = async (req, res) => {
-  const { id } = req.params;
-  try {
-    const user = await User.findByPk(id);
-    if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: "User not found with id " + id,
-      });
-    }
-    if (user) {
-      user.status = "Active";
-      await user.save();
-      res.status(200).json({
-        success: true,
-        message: "User Activated successfully!",
-      });
-    }
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error,
-    });
-  }
-};
-
-exports.suspendUser = async (req, res) => {
-  const { id } = req.params;
-  try {
-    const user = await User.findByPk(id);
-    if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: "User not found with id " + id,
-      });
-    }
-    if (user) {
-      user.status = "Suspended";
-      await user.save();
-      res.status(200).json({
-        success: true,
-        message: "User Suspended successfully!",
-      });
-    }
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error,
-    });
-  }
-};
+}
